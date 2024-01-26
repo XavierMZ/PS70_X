@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Final Project</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script> 
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+				
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../index.html" class="logo">
+									<span class="symbol"><img src="../images/logo.svg" alt="" /></span><span class="title">Chase Van Amburg</span>
+								</a>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="../assignments/index.html">Home</a></li>
+							<li><a href="../assignments/week3/final.html">Final Project</a></li>
+							<li><a href="../assignments/about.html">About</a></li>
+							<li><a href="../assignments/elements.html">Elements</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1 align="center">Designing a MIDI Controller from Arduino Uno</h1>
+							<div class="writeup">
+								<h3 align="center"><u>Product</u></h3>
+								
+								<span class="inset"><img src="midi.jpeg" alt="" width="500"><br></span>
+								
+								<p>This Arduino Uno MIDI Controller comes with a variety of features for real music production: 
+								<ol>
+								<li>Keys: Play any note you like!</li>
+									<li>Octave Buttons: At any range you like!</li>
+									<li>Faders and Knobs: With the effects you like!</li>
+									<li>Velocity-Sensitive Pads: At the velocity you like!</li>
+								</ol>
+								This set of features allows for musical expression that can be recorded directly in any computer software that takes MIDI input, designed especially for DAWs (Digital Audio Workstations). Please enjoy the video below, <strong>with background music composed on the controller itself!</strong>
+								</p>
+							
+								<h3 align="center"><iframe width="672" height="378" src="https://www.youtube.com/embed/s4Us_PBkxso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></h3>
+								
+								<h3 align="center"><u>Objective</u></h3>
+								<p>As music becomes increasingly integrated with electronics, one modern device has dominated the translation of musical expression to electronic signal: the MIDI controller. These devices generally look like keyboards, and are often outfitted with a variety of pads, faders, rotary encoders, and more. I created a MIDI controller with various input sensors from an Arduino Uno. Join me as I explain the process! Code is freely available here: <a href="MIDI/MIDI.ino" download>Download MIDI.ino</a></p>
+								
+								
+								
+								<h3 align="center"><u>Fabrication Details</u></h3>
+								<h3 id="Outline">Outline:</h3><p>
+									<ol>
+										<li><a href="#signal">Sending Midi Signal</a></li>
+										
+										<li><a href="#bsk">Buttons, Sliders, and Knobs</a></li>
+										
+										<li><a href="#keys">Keys</a></li>
+										
+										<li><a href="#pads">Pads</a></li>
+										
+										<li><a href="#house">Housing</a></li>
+										
+										<li><a href="#conc">Conclusion</a></li>
+									</ol>
+								</p>
+								
+								<h3 id="signal">Output: MIDI Signal</h3>
+							
+								<p>MIDI (Musical Instrument Digital Interface) is a communications protocol between instruments and computers. Signals are sent as packages of three bytes, whose content depends on the specific message. Hinton Instruments provides a great foundational understanding in their <a href="http://hinton-instruments.co.uk/reference/midi/protocol/index.htm">MIDI Protocol Guide</a>.</p>
+							
+								<span class="inset"><img src="hinton.png" alt="" width="500"><br></span>
+							
+								<p>Consider a Note On signal sending a middle C (C4) at maximum volume, consisting of the following bytes:
+								<ol>
+									<li>0x90: Send a note on channel 0</li>
+									<li>0x3C: Send a note pitch of 60 (C4)</li>
+									<li>0x7E: Send a velocity value of 127 (maximum)</li>
+								</ol>
+								</p>
+						
+								<p>Arduino code for a MIDI signal appears as follows:</p>
+<pre><code language="language-Arduino">void send(byte cmd, byte db1, byte db2) {
+  Serial.write(cmd);
+  Serial.write(db1);
+  Serial.write(db2);
+}
+</code></pre>
+								<p>However, the Arduino Uno is normally unable to send MIDI signal, as it is recognized as a Serial instead of a USB device. I describe the process to send MIDI signal from an Uno below:
+								<ol>
+									<li>Download the <a href="https://github.com/kuwatay/mocolufa">dualMocoLUFA</a> firmware from the <code>HEX/dualMoco.hex</code> pathway. This allows the Uno to function as either a Serial or USB device depending on a jumper between ICSP pins.</li>
+									<li>Push the firmware following <a href="https://docs.arduino.cc/hacking/software/DFUProgramming8U2">this guide</a>. After pushing, disconnect and reconnect the Uno, and open up the Arduino IDE. The device should not be connected.</li>
+									<li>To put the Arduino in Serial mode, connect ICSP pins 4 and 6, located near the reset button. See <a href="http://morecatlab.akiba.coocan.jp/lab/index.php/aruino/midi-firmware-for-arduino-uno-moco/?lang=en">this page</a> for clarity. </li>
+									<li>Upload a sketch, such as <code>File &gt; Examples &gt; 04.Communication &gt; MIDI</code>.</li>
+									<li>Disconnect the board, remove the jumper cable between ICSP pins 4 and 6, then reconnect the board. It should be sending MIDI signal!</li>
+									<li>To confirm signal is sent, check that MIDI signal is detected with a software like <a href="https://hautetechnique.com/midi/midiview/">MidiView</a>.</li>
+								</ol>
+								With this process complete, we can begin configuring input devices to translate our physical actions into electronic signal, and ultimately musical expression!
+								</p>
+							
+								<h3 id="bsk">Input: Buttons, Sliders, and Knobs</h3>
+						
+								<p><strong>Buttons: </strong>I use two buttons to control the octave of the machine. One button shifts all notes up by one octave (12 half steps), while the other button shifts notes an octave down. The buttons are each wired to ground and a digital input pin initialized as <code>INPUT_PULLUP</code>. Pin states are read using the custom <code>pullupRead()</code> function, which reads 1 if a button hooked up to a pullup resistor circuit is pressed, and 0 otherwise.</p>
+<pre><code language="language-Arduino">void handleOctaves() {
+  for (int i = 0; i &lt; 2; i++) {
+    octaveCState[i] = pullupRead(OCTAVE_BUTTON_PIN[i]);
+
+    if (octaveCState[i] != octavePState[i] && octaveCState[i] == 1) {
+
+      if (i == 0) {
+        octave -= 12;
+      }
+      else if (i == 1){
+        octave += 12;
+      }
+      
+    }
+    octavePState[i] = octaveCState[i];
+  }
+}
+</code></pre>
+								<p><strong>Sliders and Knobs: </strong>These function as potentiometers, and control various MIDI signals. Each potentiometer is wired to power, ground, and an analog input pin. Their inherent values of [0, 1023] are mapped to [0, 127] to fit with MIDI signal constraints. </p>
+<pre><code language="language-Arduino">void handlePots() {
+  for (int i = 0; i &lt; N_POTS; i++) {
+    potCState[i] = map(analogRead(POT_PIN[i]), 0, 1023, 0, 127);
+
+    if (potCState[i] != potPState[i]) {
+      send(0xB0+1, POT_VALS[i], potCState[i]);
+    }
+    potPState[i] = potCState[i];
+  }
+}
+</code></pre>								
+								
+								<h3 id="keys">Input: Keys</h3>
+						
+								<p>Commerically available MIDI controllers generally employ one of three types of keys: digital, velocity-sensing through time, or velocity-sensing through weight. Digital keys are the most simple, and send a constant velocity signal if the key is pressed; this requires a single button. Velocity-sensing keys use two buttons at different positions. The key is attached like a lever, so one button is depressed beofre the other. By recording the difference in time, one can calculate a velocity of press and translate that to volume or intensity. Weighted keys use a more complex mechanism, but effectively use the same calculation. I decided to use simple on/off keys for my build based on a single button. The design was based off of the <a href="https://create.arduino.cc/projecthub/john-bradnam/arduino-soundlab-bf8593?ref=search&ref_id=piano%20keyboard&offset=14">Arduino Soundlab</a> by John Bradnam. However, I decided to reconstruct the model to redesign tabs, add attachment points for the keys, and to allow for lasercutting of wood keys. My full model is shown below, as well as just the tabs that were 3D printed.</p>
+						
+								<iframe src="https://college235.autodesk360.com/shares/public/SH9285eQTcf875d3c539b4bffed9c71ac9e8?mode=embed" width="800" height="600" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+						
+								<iframe src="https://college235.autodesk360.com/shares/public/SH9285eQTcf875d3c539d14b004f0b58dc72?mode=embed" width="800" height="600" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+						
+								<p>The set of 13 keys were wired into a 16-input multiplexer, which only requires 5 pins on the limited capacity of the Arduino Uno. Arduino code to deal with keys appears as follows:</p>
+<pre><code language="language-Arduino">
+void handleKeys() {
+  for (int i = 0; i &lt; N_KEYS; i++) {
+    buttonCState[i] = pullupReadMux(i, muxPins1, sensorPin1);
+
+    if (buttonCState[i] != buttonPState[i]) {
+      if (buttonCState[i] == 1) {
+        send(0x90, MESSAGE_VAL[i]+octave, 64);
+      }
+      else if (buttonCState[i] == 0) {
+        send(0x90, MESSAGE_VAL[i]+octave, 0);
+      }  
+    }
+    buttonPState[i] = buttonCState[i];
+  }
+}
+</code></pre>
+								Here are the keys in progress, wired into the multiplexer:
+								<span class="inset"><img src="keys_back.png" alt="" width="500"><br></span>
+								<h3 id="pads">Input: Pads</h3>
+								
+								<p>While my keys sent binary output of on/off, I wanted to design pads which were velocity sensitive. This allows for more expression, and is especially often used in the context of drums. I aimed to construct 8 drum pads total, structured as 2 rows of 4 pads each. This <a href="https://www.youtube.com/watch?v=X-mxTYgY9lQ">video</a> and its associated code was incredibly helpful in approaching this problem. My first big question was how to detect different amounts of pressure, especially in terms of deciding between capacitive vs. resistive sensing. Due to the consistency and easier control of resistive sensors, I decided to use the force-sensitive resistor Velostat. This material changes resistivity with force, making it the perfect candidate for these sensors.</p>
+								
+								<p>The general design of a single row is shown below. The bottom layer is a copper strip specific to the pad, connected to a multiplexer analog input. Velostat is in the middle. On top, is a common copper strip which connects to power. Above this velostat sandwich is a layer of plastic supporting gel-like pads. The output of the multiplexer is sent through a voltage divider circuit, for which I used a 300Ω resistor to tune my inputs to the sensitivity of the velostat.</p>
+								
+								<span class="inset"><img src="pads.png" alt="" width="400"><br></span>
+								<span class="inset"><img src="pads1.png" alt="" width="250"><img src="pads2.png" alt="" width="250"><img src="pads3.png" alt="" width="250"><br>Pads in Progress</span>
+								
+								<p>Calibrating the pad values was difficult at first, and I experienced difficulty with nearby interference. However, by carefully setting lower and upper bounds, the pads become both sensitive and non-noisy. The signal is really great on these things! Below is the code I used to process the signal data.</p>
+<pre><code language="language-Arduino">void handlePads() {
+  for (int i = 0; i &lt; N_PADS; i++) {
+    padCState[i] = analogReadMux(i, muxPinsPad, PAD_PIN);
+    diff = padCState[i] - padPState[i];
+    if ((diff &gt; 5 || diff &lt; -5) &amp;&amp; padCState[i] &gt; PADS_MIN[i]) {
+      
+      vel = map(padCState[i], PADS_MIN[i], PADS_MAX[i], 0, 127);
+      if (vel &gt; 127) {
+        vel = 127;
+      }
+      send(0x90, PAD_VAL[i], vel);
+    }
+    else if (diff &lt; -10 ) {
+      send(0x90, PAD_VAL[i], 0);
+    }
+    padPState[i] = padCState[i];
+  }
+}
+</code></pre>
+							
+								<h3 id="house">Housing</h3>
+						
+								<p>Wooden housing was laser cut for the structure of the rectangular MIDI controller. The box is 15 x 6.7 x 3 inches, a pretty compact size.</p>
+								
+								<span class="inset"><img src="housing.png" alt="" width="500"><br>MIDI Top</span>
+							
+								<h3 id="conc">Conclusion</h3>
+						
+								<span class="inset"><img src="midi.jpeg" alt="" width="400"><br></span>
+								
+								<p>I'm incredibly happy with how the MIDI controller turned out! It sends signal great and is very responsive. One major issue is the speed of the Uno MCU, which is not fast enough to capture every input. In the future, I would add more buttons (maybe with a Mega).</p>
+						  </div>
+
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+							</section>
+							<section>
+								<h2>Contact</h2>
+								<ul class="icons">
+									<li><a href="mailto:cvanamburg@college.harvard.edu" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Chase Van Amburg 2022. All rights reserved</li><li> Sick Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assignments/week1/assets/js/jquery.min.js"></script>
+			<script src="../assignments/week1/assets/js/browser.min.js"></script>
+			<script src="../assignments/week1/assets/js/breakpoints.min.js"></script>
+			<script src="../assignments/week1/assets/js/util.js"></script>
+			<script src="../assignments/week1/assets/js/main.js"></script>
+
+	</body>
+</html>

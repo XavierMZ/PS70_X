@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Week 10</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script> 
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+				
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../../index.html" class="logo">
+									<span class="symbol"><img src="../../images/logo.svg" alt="" /></span><span class="title">Chase Van Amburg</span>
+								</a>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../week3/final.html">Final Project</a></li>
+							<li><a href="../about.html">About</a></li>
+							<li><a href="../elements.html">Elements</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1 align="center">Week 10: Machine Design</h1>
+							<div class="writeup">
+								<h3 id="Outline">Outline:</h3><p>
+									<ol>
+										<li><a href="#Motors">Motors</a></li>
+										
+										<li><a href="#Design">Machine Design</a></li>
+									</ol>
+								</p>
+							
+								<p>This week, Joseph and I worked together to expand on the previous week's Owl Head on Cup idea. Our goal was to make a 2-axis machine, each axis controlled by a single stepper motor. This worked! One axis uses linear motion to move the head from side to side, while the other uses rotational motion to spin the owl head.</p>
+							
+								<span class="inset"><img src="front.png" alt="" width="800"><br></span>
+								
+								<h3 id="Motors">Controlling Two Motors:</h3>
+							
+								<p>To even beginning building the 2-axis machine, we needed to get comfortable with stepper motors. Luckily, there are 2 great Arduino libraries that are pre-built for this: <code>Stepper</code> and <code>AccelStepper</code>. <code>Stepper</code> is more suited to simple stepwise movements, while <code>AccelStepper</code> can run the motor at varying acceleration and velocities. While the <code>AccelStepper</code> documentation is a bit confusing to traverse, there are several great examples included with the library that really make sense of the library's power. In our case, where we wanted slow, controlled movements of the machine, <code>Stepper</code> was a more natural, barebones choice. </p>
+							
+								<p>Each motor was controlled with a Dual L9110 H-Bridge motor driver to ramp up voltage as necessary. A single motor requires 4 pins to specify its control. This circuitry setup is demonstrated in the image below.</p>
+							
+								<span class="inset"><img src="circuit.png" alt="" width="400"><img src="top.png" alt="" width="400"><br></span>
+							
+								<p>The position of the linear axis motor was controlled by a slide potentiometer. In the initialization of the machine, the linear axis motor brings the central platform all the way to the edge of the rail, until it triggers a limit switch. The platform then moves slightly away from the very edge, and position is set to 0. Future movements are then controlled by a slide potentiometer which maps directly onto the physical space of the rail. Effectively, the limits of the slide potentiometer are hard coded to match the limits of the rail after the zeroing initialization step.</p>
+							
+								<p>As for the second, rotational axis, this is controlled with a standard rotary potentiometer, where the distance from the center of the potentiometer's range corresponds to the speed in the corresponding direction. Thus, if the potentiometer is rotated counterclockwise from its centerpoint, the owl head too will rotate counterclockwise. Both this and the linear axis control is implemented in the code below.</p>
+							
+<pre><code language="language-Arduino">#include &lt;Stepper.h>
+#include &lt;AccelStepper.h>
+
+int potX = A0;
+int potValX = 0;
+int posGoalX = 0;
+int currentPosX = 0;
+int stepSize = 5;
+bool triggered = false;
+
+int limitPin = 7;
+int limit = 1;
+
+int in = A1;
+int potValR = 0;
+int spdR = 0;
+
+const int stepsPerRevolution = 200;
+Stepper sX(stepsPerRevolution, 8, 9, 10, 11);
+Stepper sR(stepsPerRevolution, 2, 3, 4, 5);
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+
+  pinMode(limitPin, INPUT_PULLUP);
+
+  while (!triggered) {
+    sX.step(-1);
+    // Serial.println("Step.");
+    
+    limit = digitalRead(limitPin);
+    Serial.println(limit);
+    if (limit == 0) {
+      Serial.println("TRIGGERED!");
+      triggered = true;
+    }
+  }
+  sX.step(20);
+}
+
+void loop() {
+  potValR = analogRead(in);
+  spdR = map(potValR, 0, 1023, -5, 5);
+  sR.step(spdR);
+  
+  // put your main code here, to run repeatedly:
+  potValX = analogRead(A0);
+  Serial.print("Pot: ");
+  
+  posGoalX = map(potValX, 0, 1023, 0, 1150);
+
+  Serial.println(posGoalX);
+  Serial.println(currentPosX);
+  
+  if (currentPosX &lt; posGoalX) {
+    currentPosX++;
+    sX.step(stepSize);
+    
+  }
+  if (currentPosX &gt; posGoalX) {
+    currentPosX--;
+    sX.step(-stepSize);
+  }
+}
+</code></pre>
+							
+								<h3 id="Design">Machine Design:</h3>
+							
+								<p>Joseph was responsible for actually fabricating most of the machine. He assembled the frame from metal bars around the lab, and screwed on the stepper motors with brackets. After laser cutting a platform for the rotational stepper motor with the owl head, he screwed down the motor into this platform for movement along the bar. So much <strong>credit to Andrei</strong> for his 3D models for a pulley (printed in yellow). Wouldn't have been possible without him! With that being said, here's the final product:</p>
+							
+								<span class="inset"><video width="720" src="good.mov" controls autoplay muted>
+								</video><br></span>
+							
+							</div>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+							</section>
+							<section>
+								<h2>Contact</h2>
+								<ul class="icons">
+									<li><a href="mailto:cvanamburg@college.harvard.edu" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Chase Van Amburg 2022. All rights reserved</li><li> Sick Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../week1/assets/js/jquery.min.js"></script>
+			<script src="../week1/assets/js/browser.min.js"></script>
+			<script src="../week1/assets/js/breakpoints.min.js"></script>
+			<script src="../week1/assets/js/util.js"></script>
+			<script src="../week1/assets/js/main.js"></script>
+
+	</body>
+</html>

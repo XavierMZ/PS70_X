@@ -1,0 +1,9 @@
+/* CSS Document */
+.final-button {
+	display: flex;
+	width: 12em;
+	position: relative;
+	color: blue;
+	align-self: center;
+	margin: auto;
+}

@@ -1,0 +1,367 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Week 9</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script> 
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+				
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../../index.html" class="logo">
+									<span class="symbol"><img src="../../images/logo.svg" alt="" /></span><span class="title">Chase Van Amburg</span>
+								</a>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../week3/final.html">Final Project</a></li>
+							<li><a href="../about.html">About</a></li>
+							<li><a href="../elements.html">Elements</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1 align="center">Week 9: Internet of Things and Wireless Communication</h1>
+							<div class="writeup">
+								<p><a href="led_test1.html">Owl Interface</a></p>
+								<h3 id="Outline">Outline:</h3><p>
+									<ol>
+										<li><a href="#Output">Firebase</a></li>
+										
+										<li><a href="#Input">Controlling a Motor with Firebase Data</a></li>
+										
+										<li><a href="#Cam">ESP32 Camera Module</a></li>
+									</ol>
+								</p>
+							
+								<p>We designed an owl. Our ideation process went through several stages, landing at an owl with a camera hooked up to it. The output is both the motor rotating and the image produced through the camera. The input will come through a website connected to a Google Firebase app, with which the MCU communicates. Information given by the user through the website goes through a Firebase Realtime Database, where it is regularly accessed by the MCU to determine its behavior (namely, motor speed and direction). </p>
+								
+								<h3 id="Output">Connecting a Motor to Firebase Database:</h3>
+							
+								<p>My first step was hooking up the ESP32, an MCU with built-in wireless connection capabilities, to a Firebase database. To do that, I followed 2 tutorials: one by <a href="https://nathanmelenbrink.github.io/lab/networking/huzzah1b.html">Nathan</a> and the other by <a href="https://randomnerdtutorials.com/esp32-firebase-realtime-database/">Rui Santos (RandomNerd)</a>. It wasn't too hard to figure everything out, and I thought I'd present a simple list here:</p>
+							
+								<p>
+								
+								Create a Firebase Realtime Database to Write and Read Data:<ol><li>Navigate to the <a href="https://firebase.google.com">Google Firebase homepage</a> and select <strong>Get started</strong>.</li>
+								<li>Create a project by clicking <strong>Add project</strong> and giving it a name.</li>
+								<li>Select <em>Realtime Database</em> from the menu on the left, click <strong>Create database</strong>. Do this in Test Mode, which is less secure, but makes connecting to the MCU easier.</li>
+								<li>Record the database URL.</li>
+								<li>Select the Gear icon in the top right of the left panel. Select <em>Project settings</em> &rarr; <em>Service accounts</em> &rarr; <em>Database secrets</em>. Hover over the secret key, select <em>Show</em>, copy the key, and record it. This will be used to allow the MCU access to the variables stored in the Realtime Database.</li><br>
+							<strong>*</strong> At this point, an MCU can be connected to the Realtime Database. However, we would have to edit data directly through the database. Thus, we will create a Firebase app, where we can interact with the database (read/write) through a more user-friendly webpage. <strong>*</strong><br><br>
+							
+							
+								<li>Select <em>Project Overview</em> from the top left of the left panel to navigate to the project homepage. Under the title <strong>Get started by adding Firebase to your app</strong>, select the Web icon (&lt;/&gt;).</li>
+								<li>Ignore the majority of text that appears under Step 2. Add Firebase SDK. Just copy and store all the variables contained within <code language="language-JavaScript">const firebaseConfig</code>.</li>
+								<li>Set up a webpage using the following code. Replace the values in the <code>firebaseConfig</code> variable with your own Firebase app details. This code creates a String variable in the Firebase database called <code>LED_STATUS</code> which can be toggled either ON or OFF. This offers a simple example of how interacting with a webpage through JavaScript elements can communicate information to the Realtime Database.</li>
+						
+							<pre><code>
+&lt;!doctype html>
+&lt;html class="no-js" lang="en">
+&lt;head>
+	&lt;meta charset="utf-8" />
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	&lt;title>PHYSCI 70: Introduction to Digital Fabrication&lt;/title>
+&lt;/head>
+
+&lt;body>
+
+	 &lt;button id="turn-on" name="turnon">Turn On&lt;/button>
+	 &lt;button id="turn-off" name="turnoff">Turn Off&lt;/button>
+
+	&lt;!-- The core Firebase JS SDK is always required and must be listed first -->
+	&lt;script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js">&lt;/script>
+
+	&lt;!-- TODO: Add SDKs for Firebase products that you want to use
+	     https://firebase.google.com/docs/web/setup#available-libraries -->
+	&lt;script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js">&lt;/script>
+
+	&lt;script>
+	// Your web app's Firebase configuration
+	var firebaseConfig = {
+		apiKey: "REPLACE_WITH_YOUR_OWN",
+		authDomain: "REPLACE_WITH_YOUR_OWN",
+		databaseURL: "REPLACE_WITH_YOUR_OWN",
+		projectId: "REPLACE_WITH_YOUR_OWN",
+		storageBucket: "REPLACE_WITH_YOUR_OWN",
+		messagingSenderId: "REPLACE_WITH_YOUR_OWN",
+		appId: "REPLACE_WITH_YOUR_OWN"
+	};
+		// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+
+	// Get a database reference to our blog
+	var ref = firebase.database().ref("/");
+
+	// make the buttons call the function below 
+	document.getElementById('turn-on').addEventListener('click', turnOn, false);
+	document.getElementById('turn-off').addEventListener('click', turnOff, false);
+
+	function turnOn(){
+		console.log("turning on");
+		ref.update({
+			"LED_STATUS": "ON"
+		});
+	}
+
+	function turnOff(){
+		console.log("turning off");
+		ref.update({
+			"LED_STATUS": "OFF"
+		});
+	}	
+&lt;/script>
+
+&lt;/body>
+
+							</code></pre>
+							
+							Finally, on to connecting this app to the MCU. In this case, I am using an ESP32.
+								<li>Download the library <strong>Firebase ESP32 Client</strong> by Mobizt. </li>
+								<li>Then, upload the following code for controlling an LED to your MCU, credit to Nathan Melenbrink.</li>
+							<pre><code>
+
+#include &lt;WiFi.h&gt;                                 // esp32 library
+#include &lt;FirebaseESP32.h&gt;                        // firebase library
+
+#define FIREBASE_HOST "esp32-led-9a0ab.firebaseio.com"  // the project name address from firebase id
+#define FIREBASE_AUTH ""                    			// the secret key generated from firebase
+#define WIFI_SSID ""                            		// input your home or public wifi name
+#define WIFI_PASSWORD ""                        		// password of wifi ssid
+
+String fireString = "";                                          // led status received from firebase
+int ledpin = 5;
+
+//Define FirebaseESP32 data object
+FirebaseData firebaseData;
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000);
+  pinMode(ledpin, OUTPUT);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);                          // try to connect with wifi
+
+  Serial.print("Connecting to ");
+  Serial.print(WIFI_SSID);
+  while (WiFi.status() != WL_CONNECTED) {
+	Serial.print(".");
+	delay(500);
+  }
+
+  Serial.println();
+  Serial.print("Connected to ");
+  Serial.println(WIFI_SSID);
+  Serial.print("IP Address is : ");
+  Serial.println(WiFi.localIP());                                // print local IP address
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);                  // connect to firebase
+  Firebase.reconnectWiFi(true);
+  Firebase.set(firebaseData, "/LED_STATUS", "OFF");              // set initial string of "OFF"
+}
+
+void loop() {
+
+  Firebase.get(firebaseData, "/LED_STATUS");                     // get led status input from firebase
+  fireString = firebaseData.stringData();                        // change to e.g. intData() or boolData()
+  Serial.println(fireString);
+
+  if (fireString == "ON") {                    // compare the input of led status received from firebase
+	Serial.println("Led Turned ON");
+	digitalWrite(ledpin, HIGH);                // make output led ON
+  }
+
+  else if (fireString == "OFF") {              // compare the input of led status received from firebase
+	Serial.println("Led Turned OFF");
+	digitalWrite(ledpin, LOW);                 // make output led OFF
+  }
+
+  else {
+	Serial.println("Please send ON/OFF");
+  }
+
+  delay(1000);                                 // not strictly necessary
+}
+
+</code></pre>
+							<li>Hook up your circuit, power up the MCU, and control the LED from your webpage!</li>
+								
+							</ol>
+							
+							</p>
+						
+							<p>To translate this framework to the motor, I combined the code for interacting with the Firebase database through a webpage with previous work on a motor controlled with a L9110 motor driver. The code is presented below.</p>
+						
+							
+						
+							
+							<h3 id="Input">Controlling a Motor Remotely:</h3>
+						
+							<p>The two main behavioral parameters of a DC motor are direction and speed. I decided a slider would be the best interface for controlling this motor. The center of the slider is 0 speed; speed increases with absolute distance from the center of the slider. Moving the slider to the left indicates counterclockwise, while moving the slider to the right indicates clockwise. I learned how to create a slider from <a href="https://www.w3schools.com/howto/howto_js_rangeslider.asp">this W3Schools tutorial</a>. See below for a simple and janky example:</p>
+						
+							<input type="range" min="1" max="100" value="50" align="center" margin="auto">
+						
+							<p>I customized this a bit for the <a href="led_test1.html">Owl Interface</a>, where the range spans from -10 to 10, inclusive. These values are sent to the Firebase Realtime Database using JavaScript code modified from <a href="https://nathanmelenbrink.github.io/lab/networking/servo_demo.html">Nathan's Remote Servo Example</a>. I use an event listener triggered by <em>input</em>, which is triggered whenever the slider is moved. This listener then triggers a corresponding update of the SLIDER integer variable in the database, which can be read by the MCU. My code for controlling the motor through the ESP32 is shown below. It combines modified versions of both the remote servo control and previous code on controlling a motor through a motor driver with the ESP32 analog write capabilities (<code language="language-Arduino">ledcWrite()</code>).</p>
+						
+<pre><code language="language-Arduino">
+#include &lt;WiFi.h>                                // esp32 library
+#include &lt;FirebaseESP32.h>                       // firebase library
+
+#define FIREBASE_HOST "https://ps70-blind-owls-default-rtdb.firebaseio.com/"  // the project name address from firebase id
+#define FIREBASE_AUTH "vtKmNN0wxHkexJ07Vi0wM9FKTDOfwjf68cBdqopq"                                // the secret key generated from firebase
+#define WIFI_SSID "MAKERSPACE"                                    // input your home or public wifi name
+#define WIFI_PASSWORD "12345678"
+
+int slider_val = 0; 
+int spd = 0;
+
+FirebaseData firebaseData;
+
+
+// Define PWM properties
+const int A1A = 27;  // define pin 27 for A-1A (PWM Speed)
+const int freq = 30000;
+const int pwmChannel = 0;
+const int resolution = 8;
+
+// Define pin for direction control
+const int A1B = 26;  // define pin 26 for A-1B (direction)
+
+int value = 0;
+
+void setup() {
+  // WIFI server connection
+  Serial.begin(115200);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);                          // try to connect with wifi
+
+  Serial.print("Connecting to ");
+  Serial.print(WIFI_SSID);
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+
+  Serial.println();
+  Serial.print("Connected to ");
+  Serial.println(WIFI_SSID);
+  Serial.print("IP Address is : ");
+  Serial.println(WiFi.localIP());                                // print local IP address
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);                  // connect to firebase
+  Firebase.reconnectWiFi(true);
+  // Change the firebase data value
+  Firebase.set(firebaseData, "/SLIDER", 1); 
+
+
+  // Motor code
+  pinMode(A1A, OUTPUT); 
+  pinMode(A1B, OUTPUT);
+
+  ledcSetup(pwmChannel, freq, resolution);
+  ledcAttachPin(A1A, pwmChannel);
+}
+
+void loop() {
+  Firebase.get(firebaseData, "/SLIDER");                     // get slider input from Firebase
+  slider_val = firebaseData.intData();
+
+  if (slider_val > 0) { //CW
+    spd = map(slider_val, 1, 10, 25, 255);
+    motorA(LOW, spd);
+  }
+  else if (slider_val &lt; 0) { //CCW
+    spd = map(slider_val, -10, 1, 0, 230);
+    motorA(HIGH, spd);
+  }
+  Serial.println(slider_val);
+  
+
+  delay(1000);
+}
+
+// This is a custom function to drive Motor A
+// inputs: direction (HIGH/LOW), speed (0-255)
+// outputs: motor control
+
+void motorA(byte d, int s) {
+  if(d == 1){
+    ledcWrite(pwmChannel, 255-s); 
+    digitalWrite(A1B, HIGH); 
+  } else if (d == 0){
+    ledcWrite(pwmChannel, s); 
+    digitalWrite(A1B, LOW);
+  }
+}
+</code></pre>
+						
+						<p>Head to the <a href="led_test1.html">Owl Interface</a> page and look at the source code to see the specific changes I made. The video belows demonstrates how the spinning owl works.</p>
+						
+						<span class="inset"><video width="720" src="owl.MOV" controls autoplay muted>
+								</video><br></span>
+						
+						
+							<h3 id="Cam">Connecting the ESP32-CAM:</h3>
+						
+							<p>The ESP32-CAM module provides a small camera which can communicate wirelessly. The image through the camera can be rapidly updated and hosted as a live stream on a webpage. The camera module as controlled through an FTDI programmer. The entire setup process is really well described by <a href="https://randomnerdtutorials.com/esp32-cam-video-streaming-web-server-camera-home-assistant/">this RandomNerd tutorial</a>, so I won't try to replicate it.</p>
+						
+							<p>After installing the ESP32-CAM library, I uploaded the example code by opening the Arduino IDE and navigating to Files &rarr; Examples &rarr; ESP32 &rarr; Camera &rarr; CameraWebServer. This code is ready to go as long as you change variables <code>ssid</code> and <code>password</code> to the values corresponding to your local network. This example code provides quite a robust interface, and the quality on the ESP32-CAM is surprisingly good. </p>
+						
+							<span class="inset"><img src="me.png" alt="" width="500"><br></span>
+						
+							If we wanted to implement this into our owl, we'd have to either limit the rotation of the head or provide the camera with its own battery source, preventing wires from getting tangled as the owl rotates.
+								
+						  </div>
+
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+							</section>
+							<section>
+								<h2>Contact</h2>
+								<ul class="icons">
+									<li><a href="mailto:cvanamburg@college.harvard.edu" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Chase Van Amburg 2022. All rights reserved</li><li> Sick Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../week1/assets/js/jquery.min.js"></script>
+			<script src="../week1/assets/js/browser.min.js"></script>
+			<script src="../week1/assets/js/breakpoints.min.js"></script>
+			<script src="../week1/assets/js/util.js"></script>
+			<script src="../week1/assets/js/main.js"></script>
+
+	</body>
+</html>

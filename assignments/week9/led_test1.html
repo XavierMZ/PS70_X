@@ -1,0 +1,130 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Owl Interface</title>
+	<style>
+	.slidecontainer {
+	  width: 100%;
+	}
+
+	.slider {
+	  -webkit-appearance: none;
+	  width: 50%;
+	  margin-right: auto;
+	  margin-left: auto;
+	  margin-top: 10px;
+	  display: block;
+	  height: 15px;
+	  border-radius: 100px;
+	  background: #d3d3d3;
+	  background-image: linear-gradient(to right, red , blue, red);
+	  outline: none;
+	  opacity: 0.7;
+	  -webkit-transition: .2s;
+	  transition: opacity .2s;
+	}
+
+	.slider:hover {
+	  opacity: 1;
+	}
+
+	.slider::-webkit-slider-thumb {
+	  -webkit-appearance: none;
+	  appearance: none;
+	  width: 25px;
+	  height: 25px;
+	  border-radius: 50%;
+	  background: #000;
+	  cursor: pointer;
+	}
+
+	.slider::-moz-range-thumb {
+	  width: 25px;
+	  height: 25px;
+	  border-radius: 50%;
+	  background: #000;
+	  cursor: pointer;
+	}
+	</style>
+</head>
+
+<body>
+	
+	<h1 align="center">OWL INTERFACE</h1>
+	<button id="turn-on" name="turnon">Spin CW</button>
+	<button id="turn-off" name="turnoff">Spin CCW</button>
+	
+	<div class="slidecontainer">
+	  <input type="range" min="-10" max="10" value="0" class="slider" id="myRange">
+	  <p>Value: <span id="demo"></span></p>
+	</div>
+	
+	<br>
+	<!--<img src="http://192.168.0.135" alt="">-->
+	
+	<p><a href="http://192.168.0.135">Camera</a></p>
+	 
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	var firebaseConfig = {
+	  apiKey: "AIzaSyCR0np6UdubMhpsQT6gYmnLXBEsK6ykXT4",
+	  authDomain: "ps70-blind-owls.firebaseapp.com",
+	  databaseURL: "https://ps70-blind-owls-default-rtdb.firebaseio.com",
+	  projectId: "ps70-blind-owls",
+	  storageBucket: "ps70-blind-owls.appspot.com",
+	  messagingSenderId: "926159043246",
+	  appId: "1:926159043246:web:ed2ebee4541b3ebf7acb3f",
+	  measurementId: "G-T844QJWQP4"
+	};
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+	// Get a database reference to our blog
+	var ref = firebase.database().ref("/");
+	// var database = firebase.database();
+
+	// make the buttons call the function below 
+	document.getElementById('turn-on').addEventListener('click', turnOn, false);
+	document.getElementById('turn-off').addEventListener('click', turnOff, false);
+	document.getElementById("myRange").addEventListener('input', sliderUpdate, false);
+
+	function turnOn(){
+		console.log("turning CCW");
+		ref.update({
+			"SLIDER": 1
+		});
+	}
+
+	function turnOff(){
+		console.log("turning CW");
+		ref.update({
+			"SLIDER": 100
+		});
+	}
+	
+	function sliderUpdate() {
+		console.log("I'm sliding, baby!");
+		ref.update({"SLIDER": parseInt(this.value)});
+		output.innerHTML = this.value;
+	}
+	
+	// W3 Example
+	var output = document.getElementById("demo");
+	output.innerHTML = slider.value;
+</script>
+
+</body>
+</html>

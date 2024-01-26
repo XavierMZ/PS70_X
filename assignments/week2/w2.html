@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Week 2</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../../index.html" class="logo">
+									<span class="symbol"><img src="../../images/logo.svg" alt="" /></span><span class="title">Chase Van Amburg</span>
+								</a>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="final.html">Final Project</a></li>
+							<li><a href="../about.html">About</a></li>
+							<li><a href="../elements.html">Elements</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1 align="center">Week 2: 2D Design &amp; Cutting</h1>
+							<div class="writeup">
+								<p>This week's assignment was the creation of a press-fit construction kit. Examples include simple polygons, like squares, circles, and triangles, with notches so the pieces can fit into each other. I didn't have a specific goal in mind, so I came up with a piece based off of a rectangle. </p>
+								
+							  <span class="inset"><img src="piece.jpg" alt="" width="300"><br></span>
+								
+							  <p>This asymmetric design gives constructions a sense of directionality, with orthogonality being generated through either the inset rectangular holes or the notches on either side. For the vocabulary I used when designing this component, <strong>nubs</strong> are the pieces on the top and bottom that pop into the <strong>insets</strong>, the rectangular holes within the shape. Finally, there are <strong>notches</strong> cut into the left and right of the shape which can attach to each other. In general, nubs attach to insets and notches attach to notches. With that, I'll explain how I designed this piece digitally and then produced a physical product. </p>
+								
+								<p>First, I had to design the piece in digital software. I used Autodesk's Fusion 360, a hierarchy-based parametric CAD (Computer-Aided Design) software. After creating a new project, I selected Create Sketch under the Create dropdown menu. Starting with a square (Create &gt; Rectangle &gt; Center Rectangle) with parameter Side_Length set to 40 mm, I created construction lines across the horizontal and vertical midpoints. By offsetting (hotkey O), mirroring, and creating custom parameters (Modify &gt; Change Parameters &gt; User Parameters &gt; +), I was able to create the design I had in my head. The features I was&nbsp; aiming for were <strong>2 nubs, 2 notches, and 3 insets</strong>. Below are the various lines I used to define the positions and sizes of these features, all defined parametrically because I had no clue what would work.</p>
+								
+								<span class="inset"><img src="2d_lines.png" alt="" width="700"><br></span>
+								<span class="inset"><img src="extrude1.png" alt="" width="700"><br></span>
+								
+								<p>I named this file Crazy_Square. The parameters for Crazy_Square are shown below.</p>
+								
+								<span class="inset"><img src="params.png" alt="" width="700"><br></span>
+								
+								<p>With this 2D design, I had to prepare it for cutting. I hit Finish Sketch in the top right corner, then hit E to extrude the faces I wanted for the 3D shape. Once this was finished, the shape was projected back into 2D with projection (P) onto a plane. By right-clicking the sketch under the hierarchy menu on the left, I had the option to "Save as DXF." My file was ready to export to the laser cutter.</p>
+								
+								<p>I imported the file to LightBurn and started the Thunder Laser Nova24 at speed 30 and power 60. I printed only 2 components my first round to see how they fit. The nub was a little big, as well as the insets. I decreased the size of these and added a third central inset.  </p>
+								
+								<span class="inset"><img src="extrude2.png" alt="" width="700"><br></span>
+								<span class="inset"><img src="params2.png" alt="" width="700"><br></span>
+								
+								<p>I was happy with the variety of shapes I could produce out of the little components I made. Here are a few!</p>
+								
+								<span class="inset"><img src="final1.jpg" alt="" width="700"><br></span>
+								<span class="inset"><img src="final2.jpg" alt="" width="700"><br></span>
+								<span class="inset"><img src="final3.jpg" alt="" width="700"><br></span>
+								
+								<p>After getting comfortable with the laser cutter, I tried some other small projects. I modified an octopus image to make a vinyl laptop sticker, as well as parametrically modeled my water bottle and floor lamp in Blender. I'm still in the process of getting comfortable with 3D in Fusion. I hope to expand on the lamp model in the future, but that's for another week!</p>
+								
+								<span class="inset"><img src="lamp.png" alt="" width="300"><img src="bottle.png" alt="" width="300"><br></span>
+								<span class="inset"><br></span>
+								
+								<p>For the lamp, I created a cylinder for the base, a long cylinder for the main stand, a sphere between the stand and the top, and a sphere for the top. I used a cube with a Boolean difference modifier to subtract from the top sphere to create an open dome, based on the measurements I'd taken comparing the height of the dome to its diameter.</p>
+								
+								<p>The bottle was also composed of cylinders, although the main component is beveled. The top cylinder is the bottle cap with a rectangular sipper sort of thing. The model is a little jank up there, but it works.</p>
+							</div>
+
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+							</section>
+							<section>
+								<h2>Contact</h2>
+								<ul class="icons">
+									<li><a href="mailto:cvanamburg@college.harvard.edu" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Chase Van Amburg 2022. All rights reserved</li><li> Sick Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../week1/assets/js/jquery.min.js"></script>
+			<script src="../week1/assets/js/browser.min.js"></script>
+			<script src="../week1/assets/js/breakpoints.min.js"></script>
+			<script src="../week1/assets/js/util.js"></script>
+			<script src="../week1/assets/js/main.js"></script>
+
+	</body>
+</html>

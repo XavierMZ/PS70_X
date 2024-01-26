@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Week 4</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="../../index.html" class="logo">
+									<span class="symbol"><img src="../../images/logo.svg" alt="" /></span><span class="title">Chase Van Amburg</span>
+								</a>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../week3/final.html">Final Project</a></li>
+							<li><a href="../about.html">About</a></li>
+							<li><a href="../elements.html">Elements</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1 align="center">Week 4: 3D Printing</h1>
+							<div class="writeup">
+								<h3 id="Outline">Outline:</h3><p>
+									<ol>
+										<li><a href="#Print">3D Printing</a></li>
+										<li><a href="#Scan">3D Scanning</a></li>
+										<li><a href="#FPUpdate">Final Project Updates</a></li>
+									</ol>
+								</p>
+							
+								<p>This week's goal was understanding the application of 3D printers and getting comfortable with 3D model work in general. I designed a box, scanned a mouse, and more!</p>
+								
+								<h3 id="Print">3D Printing:</h3><p>
+								I had made 2-3 prints before taking this class, but was generally unfamiliar with the capabilities of 3D printing. Like any other tool, it has a time and a place. I found <a href="https://all3dp.com/2/coolest-print-in-place-3d-models/">print-in-place</a> design to be the most attractive application for this week. This method printing a multi-component design that has its joints already connected, as opposed to snapping them in or otherwise joining them together after the individual components are created. Consider the multiple rings of a <a href="https://bililun.github.io/PHYSCI-70/05_printing/index.html">gyroscope</a>, but printed layer by layer so they fit perfectly by the end of the print.
+								</p>
+							
+								<p>After looking through a variety of options, I thought making a variation of this <a href="https://www.thingiverse.com/thing:4802126/files">fidget star</a> would be easy enough to iterate, but still provide a challenge in designing.</p>
+							
+								<span class="inset"><img src="fidget_star.jpg" alt="" width="300"><br></span>
+							
+								<p>By printing out the fidget star, I was able to get a better sense of how it moved and its dimensions. I roughly measured these in addition to looking at the digital model to create my own <strong>Fidget Square</strong>. Switch to Fusion 360, I started with a sketch of inset squares. To create the bevel which holds the inset shapes in as they move up and down, I created 2 offset planes. Each of these planes had the same inset squares, which were a little smaller than those on the base plane. I used the Loft tool to connect one square to another, then used the Shell tool to remove the top and bottom faces. Make sure to turn off sketch visibility when using the Shell tool, otherwise Fusion can misinterpret the target body. See below for model. </p>
+							
+								<span class="inset"><img src="box_sketch.png" alt="" width="300"><br></span>
+							
+								<p>I ended up having to iterate a few times, consistently modifying the following dimensions: thickness, distance between inset shapes, and bevel angle. Below are the 5 versions, with the rightmost being my final iteration.</p>
+							
+								<span class="inset"><img src="boxes.jpg" alt="" width="300"><br><img src="box_final.png" alt="" width="300"><br></span>
+							
+								<p>The box has height 2mm, thickness 1mm, distance between shapes 4mm, and difference between the middle square edge and outer square edges of 4mm (the middle edge sticks out 4mm from the rest of the shape). I'm pretty happy with it! I'd add more squares and maybe make the squares pop out a little more. I think by changing the bevel angle from small to large as I moved from the central box to the outermost one, I could produce a more dynamic shape.</p>
+							
+								<span class="inset"><p><a download href="./models">Download STL files</a></p></span>
+								<span class="inset"><p><a download href="./box5.gcode">Download gcode</a></p></span>
+								
+							
+								<h3 id="Scan">3D Scanning:</h3><p>
+								I used Polycam's photogrammetry mode to construct a 3D scan of my computer mouse. This took a couple tries, as my first pass was missing part of the top and the second pass was missing the entire bottom of the mouse. By the end, I'm pretty happy with how it came out; the mesh has great detail. 
+								</p>
+							
+								<iframe src="https://college235.autodesk360.com/shares/public/SH9285eQTcf875d3c5394cf9847245e016bf?mode=embed" width="800" height="600" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+							
+								<p>Polycam is great for a few reasons, especially for the <a href="https://poly.cam/explore">community</a> component. Here, users can upload their own scans from around the world, both of objects (photogrammetry) and environments (LiDAR). </p>
+								
+								<h3 id="FPUpdate">Final Project Update:</h3><p>
+								Through learning how to use some of the equipment, I've narrowed down on my interests and am getting a clearer and clearer picture of a final project design. 
+								<ol>
+									<li>MIDI Controller: I spend a lot of my free time listening to or playing music, and would love to create a small keyboard that I could make music with. This project would require a decent amount of electronics, complex mechanisms for the feel and responsivitiy of the keys, and fabrication to make the housing and overall structure. I think the majority of components are already around the shop, although a significant amount of 3D-printed components would be required for housing. In terms of timeline, I'd first like to spend 2 weeks refining the feel and action of a single key. The week after would allow for developing the code, then the 4th week would be a larger scale assembly of the controller. Allowing 2 more weeks for electronics and 1 week for finalization, the project would be mostly assembled by the end of November.</li>
+									
+									<li>Motion Study: In addition to this MIDI controller, I'd like to develop a more mechanical project. I've been very excited by the different types of motion seen in the class and through artists like Arthur Ganson. This past week, I designed and fabricated a 4-bar linkage to create a more complicated type of motion than my first kinetic sculpture. I plan to implement it in the next week, and continue developing my understanding of different types of mechanical motion. I I plan to work with crown gears the weak after that, and maybe model some of the designs shown in that one YouTube channel titled thing and then a bunch of numbers. By mid-October, I'd like to incorporate moving characters in a cohesive scene, like a diorama of complex mechanical motion. I would further develop this with more complex scenes and variety of materials.</li>
+								</ol>
+								</p>
+							
+								
+						  </div>
+
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+							</section>
+							<section>
+								<h2>Contact</h2>
+								<ul class="icons">
+									<li><a href="mailto:cvanamburg@college.harvard.edu" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+							<ul class="copyright">
+								<li>&copy; Chase Van Amburg 2022. All rights reserved</li><li> Sick Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../week1/assets/js/jquery.min.js"></script>
+			<script src="../week1/assets/js/browser.min.js"></script>
+			<script src="../week1/assets/js/breakpoints.min.js"></script>
+			<script src="../week1/assets/js/util.js"></script>
+			<script src="../week1/assets/js/main.js"></script>
+
+	</body>
+</html>
