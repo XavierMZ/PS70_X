@@ -2386,6 +2386,24 @@ input, select, textarea {
 
 			}
 
+		.image.about {
+			display: block;
+			margin: 0 auto 2em auto;
+			width: 40%;
+		}
+
+			.image.about img {
+				width: 100%;
+			}
+
+			@media screen and (max-width: 736px) {
+
+				.image.about {
+					margin: 0 0 2em 0;
+				}
+
+			}
+
 /* Table */
 
 	.table-wrapper {
@@ -2846,7 +2864,7 @@ input, select, textarea {
 /* Header */
 
 	#header {
-		padding: 8em 0 0.1em 0 ;
+		padding: 2em 0 0.1em 0 ;
 	}
 
 		#header .logo {
@@ -2854,6 +2872,7 @@ input, select, textarea {
 			border-bottom: 0;
 			color: inherit;
 			font-weight: 900;
+			font-size: 1.5em;
 			letter-spacing: 0.35em;
 			margin: 0 0 2.5em 0;
 			text-decoration: none;

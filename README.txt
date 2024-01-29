@@ -28,3 +28,14 @@ Credits:
 	Other:
 		jQuery (jquery.com)
 		Responsive Tools (github.com/ajlkn/responsive-tools)
+
+
+The website design is based off of Chase van Amburg's.
+
+Other designs I like:
+
+Ana Kimber's (nice header navigation bar)
+Felicia Liang's (same)
+Kathryn Wantlin's
+Lauren Cooke's (borders around each week's box are due to this page)
+Layla Seaver's (same)
