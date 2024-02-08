@@ -1,14 +1,9 @@
 <!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Week 2</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 		<link rel="stylesheet" href="../../assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
 	</head>
@@ -22,9 +17,15 @@
 
 							<!-- Logo -->
 								<a href="../../index.html" class="logo">
-									<span class="symbol"><img src="../../images/logo.svg" alt="" /></span><span class="title">Xavier Morales</span>
+									<span class="title">PS 70: Xavier Morales</span>
 								</a>
 
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
 						</div>
 					</header>
 
@@ -32,54 +33,112 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="../index.html">Home</a></li>
-							<li><a href="final.html">Final Project</a></li>
-							<li><a href="../about.html">About</a></li>
-							<li><a href="../elements.html">Elements</a></li>
+							<li><a href="../../index.html">Home</a></li>
+							<li><a href="../../final/final_home.html">Final Project</a></li>
+							<li><a href="../../about.html">About</a></li>
 						</ul>
 					</nav>
 
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1 align="center">Week 2: 2D Design &amp; Cutting</h1>
+							<h1 align="center">Week 2: Models, a Box, &amp; Fusion</h1>
 							<div class="writeup">
-								<p>This week's assignment was the creation of a press-fit construction kit. Examples include simple polygons, like squares, circles, and triangles, with notches so the pieces can fit into each other. I didn't have a specific goal in mind, so I came up with a piece based off of a rectangle. </p>
+							
+								<p>There were three assignments this week. The first was to build a box with the lasercutter. The second was to go through some Fusion 360 tutorial online. And the third was to model two household items in Fusion 360 and create an assembly composed of those items.</p>
+								<ol>
+									<li><a href="#BOX">Building a Box</a></li>
+									<li><a href="#TUTORIAL">Fusion 360 Tutorial</a></li>
+									<li><a href="#MODELS">Modeling Household Items</a></li>
+								</ol>
+
+								<div align="center">
+									<a class="button primary icon solid fa-download" href="./files.zip" download>Download my Files</a>
+								</div>
+
+								<div><p></p></div>
 								
-							  <span class="inset"><img src="piece.jpg" alt="" width="300"><br></span>
+								<h3 id="BOX">Getting Boxed In</h3>
+								<p>For the box assignment, I decided to construct my box using a lot of scoring. I wanted to make as many visible edges as possible be live, more so for the aesthetics than for anything else. For this reason I chose to make the sides a continuous structure, only being joined in one location, and then use fingers/teeth to connect the bottom with all the sides. For the top, I chose to make a separate cover that fit snuggly on the box. Pictures of my designs are below. I technically made the box body and the cover in separate CAD files, but I combined them into one to make them easier to visualize.</p>
+
+								<span class="inset">
+						  			<img src="images/box_sketch1.png" alt="box-sketch-1" width="600"><br>
+						  			<p>Design for box and cover in Fusion 360.</p>
+						  		</span>
+
+						  		<p>The box turned out well, but there was one small issue. It turned out that scoring cardboard leads to a pretty unique an annoying problem. And that is that when you fold the cardboard, it might not fold perfectly down the middle of the cut, but instead stick to one side and have a wider opening on the other. And the result is that the box's sides don't join too easily, because the fingers are not perfectly aligned. This is fine, because the sides do still fit together. They just don't stay snug or exactly aligned. If I performed my cuts on wood, this would not be a problem. Below are some pictures of one of the boxes I made, without the cover. I decided to make it a cube because I liked that more, but I may eventually make a shoe-box shaped one in order to keep more stuff inside of it.</p>
+
+						  		<span class="inset">
+						  			<img src="images/box1.png" alt="box-1" width="49.5%">
+						  			<img src="images/box2.png" alt="box-2" width="49.5%">
+						  			<br>
+						  			<img src="images/box3.png" alt="box-3" width="49.5%">
+						  			<img src="images/box4.png" alt="box-4" width="45.1%">
+						  			<br>
+						  			<p>My box. I told it I think it's a bit of a square.</p>
+						  		</span>
+						
+
+								<h3 id="TUTORIAL">Learning to Make Ice in Fusion</h3>
+								<p>For the Fusion 360 tutorial, I looked through past student sites for inspiration, found a good YouTube channel, and then chose an interesting model. The <a href="https://www.youtube.com/watch?v=zN44hW9zX1I&list=PLrZ2zKOtC_-C4rWfapgngoe9o2-ng8ZBr&index=7">video</a> details how to model an ice cube tray. I followed the steps exactly as they were explained in the video and I think the final product (below) ended up really nicely. The tutorial was particularly useful to understand well how to use the fillet and extrude tools, which I later used a lot in the final assignment.</p>
+
+								<span class="inset">
+						  			<img src="./images/ic1.png" alt="ice-tray1" width=49.5%>
+						  			<img src="./images/ic2.png" alt="ice-tray2" width=49.5%><br>
+						  			<p>My recreation of the ice-cube tray model.</p>
+						  		</span>
+						  		
 								
-							  <p>This asymmetric design gives constructions a sense of directionality, with orthogonality being generated through either the inset rectangular holes or the notches on either side. For the vocabulary I used when designing this component, <strong>nubs</strong> are the pieces on the top and bottom that pop into the <strong>insets</strong>, the rectangular holes within the shape. Finally, there are <strong>notches</strong> cut into the left and right of the shape which can attach to each other. In general, nubs attach to insets and notches attach to notches. With that, I'll explain how I designed this piece digitally and then produced a physical product. </p>
-								
-								<p>First, I had to design the piece in digital software. I used Autodesk's Fusion 360, a hierarchy-based parametric CAD (Computer-Aided Design) software. After creating a new project, I selected Create Sketch under the Create dropdown menu. Starting with a square (Create &gt; Rectangle &gt; Center Rectangle) with parameter Side_Length set to 40 mm, I created construction lines across the horizontal and vertical midpoints. By offsetting (hotkey O), mirroring, and creating custom parameters (Modify &gt; Change Parameters &gt; User Parameters &gt; +), I was able to create the design I had in my head. The features I was&nbsp; aiming for were <strong>2 nubs, 2 notches, and 3 insets</strong>. Below are the various lines I used to define the positions and sizes of these features, all defined parametrically because I had no clue what would work.</p>
-								
-								<span class="inset"><img src="2d_lines.png" alt="" width="700"><br></span>
-								<span class="inset"><img src="extrude1.png" alt="" width="700"><br></span>
-								
-								<p>I named this file Crazy_Square. The parameters for Crazy_Square are shown below.</p>
-								
-								<span class="inset"><img src="params.png" alt="" width="700"><br></span>
-								
-								<p>With this 2D design, I had to prepare it for cutting. I hit Finish Sketch in the top right corner, then hit E to extrude the faces I wanted for the 3D shape. Once this was finished, the shape was projected back into 2D with projection (P) onto a plane. By right-clicking the sketch under the hierarchy menu on the left, I had the option to "Save as DXF." My file was ready to export to the laser cutter.</p>
-								
-								<p>I imported the file to LightBurn and started the Thunder Laser Nova24 at speed 30 and power 60. I printed only 2 components my first round to see how they fit. The nub was a little big, as well as the insets. I decreased the size of these and added a third central inset.  </p>
-								
-								<span class="inset"><img src="extrude2.png" alt="" width="700"><br></span>
-								<span class="inset"><img src="params2.png" alt="" width="700"><br></span>
-								
-								<p>I was happy with the variety of shapes I could produce out of the little components I made. Here are a few!</p>
-								
-								<span class="inset"><img src="final1.jpg" alt="" width="700"><br></span>
-								<span class="inset"><img src="final2.jpg" alt="" width="700"><br></span>
-								<span class="inset"><img src="final3.jpg" alt="" width="700"><br></span>
-								
-								<p>After getting comfortable with the laser cutter, I tried some other small projects. I modified an octopus image to make a vinyl laptop sticker, as well as parametrically modeled my water bottle and floor lamp in Blender. I'm still in the process of getting comfortable with 3D in Fusion. I hope to expand on the lamp model in the future, but that's for another week!</p>
-								
-								<span class="inset"><img src="lamp.png" alt="" width="300"><img src="bottle.png" alt="" width="300"><br></span>
-								<span class="inset"><br></span>
-								
-								<p>For the lamp, I created a cylinder for the base, a long cylinder for the main stand, a sphere between the stand and the top, and a sphere for the top. I used a cube with a Boolean difference modifier to subtract from the top sphere to create an open dome, based on the measurements I'd taken comparing the height of the dome to its diameter.</p>
-								
-								<p>The bottle was also composed of cylinders, although the main component is beveled. The top cylinder is the bottle cap with a rectangular sipper sort of thing. The model is a little jank up there, but it works.</p>
+								<h3 id="MODELS">Podding the Air and Boarding those Keys</h3>
+								<p>For the final assignment, I chose to model a pair of airpods and a key from a keyboard I have.</p>
+
+								<span class="inset">
+						  			<img src="./images/pods1.png" alt="real-pods-1" width=49.5%>
+						  			<img src="./images/pods2.png" alt="real-pods-2" width=49.5%><br>
+						  			<p>Appled Airpods.</p>
+						  		</span>
+						  		<span class="inset">
+						  			<img src="./images/key1.png" alt="real-key-1" width=49.5%>
+						  			<img src="./images/key2.png" alt="real-key-2" width=49.5%><br>
+						  			<p>'Enter' Key (without the 'E').</p>
+						  		</span>
+
+						  		<p>Modeling the keyboard key was quite easy, and did not take too long. The hardest parts were actually figuring out how to change the color of the plastic and how to write the letters on top. I don't know if I did the letters perfectly, but I ended up just extruding text created as a sketch by 0.01mm, separating it from the rest of the key, and changing the material to be a black ink. Correct or not, it looks good.</p>
+
+						  		<span class="inset">
+						  			<img src="./images/km1.png" alt="key-model-1" width=49.5%>
+						  			<img src="./images/km2.png" alt="key-model-2" width=49.5%><br>
+						  			<img src="./images/km3.png" alt="key-model-1" width=45%>
+						  			<p>Final version of my model of the key. (note mine does have the 'E')</p>
+						  		</span>
+
+
+						  		<p>Unfortunately, modeling the airpods took much more time and effort, and in the end it's not a perfect rendition. I tried to make it so that the cap of the airpods could turn on a hinge, but that ended being a little outside of my capabilities. That being said, getting the basic shape was actually quite easy. It took basically three steps: 1) sketch a slot, 2) extrude that slot to the desired height, and 3) fillet the entire component. The pictures below show what you are left with after just these first few steps.</p>
+
+						  		<span class="inset">
+						  			<img src="./images/am1.png" alt="pods-model-1" width=49.5%>
+						  			<img src="./images/am2.png" alt="pods-model-2" width=49.5%><br>
+						  			<p>First few steps of airpods model</p>
+						  		</span>
+
+						  		<p>So, really, the hard part of the airpods is getting all the other details figured out. As I said, I wasn't fully successful in doing this, but I was able to accomplish some of them. The different is visually not huge, but in terms of time effort I spent a lot more work on the finishing touches after the pictures above than on getting the overall shape right.</p>
+
+						  		<span class="inset">
+						  			<img src="./images/am3.png" alt="pods-model-3" width=49.5%>
+						  			<img src="./images/am4.png" alt="pods-model-4" width=49.5%><br>
+						  			<p>Final version of my airpods model.</p>
+						  		</span>
+
+						  		<p>Here they are assembled in one CAD file. I thought it would be funny to make the key much bigger than the airpod. (I definitely did this on purpose and it was not that I couldn't easily scale the airpod to make it bigger.</p>
+
+						  		<span class="inset">
+						  			<img src="./images/assembled.png" alt="assembly" width=50%><br>
+						  			<p>Airpods and key in one assembly.</p>
+						  		</span>
+
+
+						  		<p>I think both of my models ended up being very solid and true to the originals, so I'm happy.</p>
+
 							</div>
 
 						</div>
@@ -87,11 +146,11 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="../week1/assets/js/jquery.min.js"></script>
-			<script src="../week1/assets/js/browser.min.js"></script>
-			<script src="../week1/assets/js/breakpoints.min.js"></script>
-			<script src="../week1/assets/js/util.js"></script>
-			<script src="../week1/assets/js/main.js"></script>
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
 
 	</body>
 </html>
