@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Week 5</title>
@@ -26,9 +21,15 @@
 
 							<!-- Logo -->
 								<a href="../../index.html" class="logo">
-									<span class="symbol"><img src="../../images/logo.svg" alt="" /></span><span class="title">Chase Van Amburg</span>
+									<span class="title">PS 70: Xavier Morales</span>
 								</a>
 
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
 						</div>
 					</header>
 
@@ -36,104 +37,74 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="../index.html">Home</a></li>
-							<li><a href="../week3/final.html">Final Project</a></li>
-							<li><a href="../about.html">About</a></li>
-							<li><a href="../elements.html">Elements</a></li>
+							<li><a href="../../index.html">Home</a></li>
+							<li><a href="../../final/final_home.html">Final Project</a></li>
+							<li><a href="../../about.html">About</a></li>
 						</ul>
 					</nav>
 
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1 align="center">Week 5: Microcontroller Programming</h1>
+							<h1 align="center">Week 5: 3D Printing</h1>
 							<div class="writeup">
 								<h3 id="Outline">Outline:</h3><p>
 									<ol>
-										<li><a href="#Keyboard">Keyboard</a></li>
-										<li><a href="#MIDI">MIDI Controller</a></li>
-										<li><a href="#Update">Update</a></li>
+										<li><a href="#Key">Keyboard Key and Mold</a></li>
+										<li><a href="#Scan">3D Scanning</a></li>
+										<li><a href="#Project">Final Projecy</a></li>
 									</ol>
 								</p>
-							
-								<p>Unfortunately, I got sick over the weekend and didn't have as much time to fiddle with the physical Arduino microcontroller as I wanted. Will plan an update soon. However, I've done research on the coding side of things!</p>
-								
-								<h3 id="Keyboard">Keyboard:</h3><p>
-								Given my limited amount of time this week due to illness, I decided to design a simple keyboard. A button would be hooked up to a pin on the Arduino and play a note using the <code class="language-arduino">tone()</code> function, which takes pin number, frequency, and intensity as arguments. Each button would be assigned to a specific note, with 8 buttons total to give a C major scale. The tone is output on a piezo. See code and circuit diagram below.
-<pre><code class="language-arduino"><font color="#000000">#</font> <font color="#000000">Declare</font> <font color="#000000">global</font> <font color="#000000">variables</font>
-<font color="#00979c">int</font> <font color="#000000">notes</font><font color="#000000">[</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">{</font><font color="#000000">65</font><font color="#434f54">,</font> <font color="#000000">73</font><font color="#434f54">,</font> <font color="#000000">82</font><font color="#434f54">,</font> <font color="#000000">87</font><font color="#434f54">,</font> <font color="#000000">98</font><font color="#434f54">,</font> <font color="#000000">110</font><font color="#434f54">,</font> <font color="#000000">123</font><font color="#434f54">,</font> <font color="#000000">130</font><font color="#000000">}</font><font color="#000000">;</font>
-<font color="#00979c">int</font> <font color="#000000">numButtons</font> <font color="#434f54">=</font> <font color="#000000">8</font><font color="#000000">;</font>
-<font color="#00979c">int</font> <font color="#000000">buttonPins</font><font color="#000000">[</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">{</font><font color="#000000">1</font><font color="#434f54">,</font> <font color="#000000">2</font><font color="#434f54">,</font> <font color="#000000">3</font><font color="#434f54">,</font> <font color="#000000">4</font><font color="#434f54">,</font> <font color="#000000">5</font><font color="#434f54">,</font> <font color="#000000">6</font><font color="#434f54">,</font> <font color="#000000">7</font><font color="#434f54">,</font> <font color="#000000">8</font><font color="#000000">}</font><font color="#000000">;</font>
-<font color="#00979c">int</font> <font color="#000000">tonePin</font> <font color="#434f54">=</font> <font color="#000000">12</font><font color="#000000">;</font>
 
-<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
- &nbsp;<font color="#434f54">&#47;&#47; Set button pins to mode INPUT_PULLUP</font>
- &nbsp;<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">i</font> <font color="#434f54">&lt;</font> <font color="#000000">numButtons</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;&nbsp;&nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">buttonPins</font><font color="#000000">[</font><font color="#000000">i</font><font color="#000000">]</font><font color="#434f54">,</font> <font color="#00979c">INPUT_PULLUP</font><font color="#000000">)</font><font color="#000000">;</font>
- &nbsp;<font color="#000000">}</font>
-<font color="#000000">}</font>
+								<div align="center">
+									<a class="button primary icon solid fa-download" href="./files.zip" download>Download my Files</a>
+								</div>
 
-<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;<font color="#434f54">&#47;&#47; Loop through all buttons</font>
- &nbsp;<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">i</font> <font color="#434f54">&lt;</font> <font color="#000000">numButtons</font><font color="#000000">;</font> <font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">state</font> <font color="#434f54">=</font> <font color="#d35400">digitalRead</font><font color="#000000">(</font><font color="#000000">buttonPins</font><font color="#000000">[</font><font color="#000000">i</font><font color="#000000">]</font><font color="#000000">)</font><font color="#000000">;</font>
- &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; If a button is pressed, play its corresponding note</font>
- &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">state</font> <font color="#434f54">==</font> <font color="#00979c">LOW</font><font color="#000000">)</font> <font color="#000000">{</font>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">tone</font><font color="#000000">(</font><font color="#000000">tonePin</font><font color="#434f54">,</font> <font color="#000000">notes</font><font color="#000000">[</font><font color="#000000">i</font><font color="#000000">]</font><font color="#000000">)</font><font color="#000000">;</font>
- &nbsp;&nbsp;&nbsp;<font color="#000000">}</font> 
- &nbsp;<font color="#000000">}</font>
-<font color="#000000">}</font>
-</code></pre>
-								</p>
-								<p>We start by defining global variables: the notes we will play, their corresponding pins, and the output pin. We then setup by connecting the Arduino to the computer and set each button pin to INPUT mode. Finally, in the loop, we check if each button has been pressed; if it has, we play its corresponding tone through the piezo. The circuit diagram was inspired by those in Arduino documentation and designed in Adobe Illustrator.</p>
-						
-							<span class="inset"><img src="diag-01.png" alt="" width="500"><br></span>
-						
+								<div><p></p></div>
 								
-							
-								<h3 id="MIDI">MIDI Controller:</h3><p>
-								Throughout high school, most of my time was spent on music. I've shifted away from that towards science in my years at Harvard, but generally consider music as a serious hobby. MIDI controllers are a great way to make music-making both more personal and customizable, but can get expensive. These are customized devices that send sound information to another computer, such as pitch, velocity, timbre, and more. Thus, I thought I'd do some research into making a MIDI controller from an Arduino. I was hoping to have a first pass at that by Tuesday, but it looks like it'll be completed closer to Thursday/Friday.
-								</p>
-							
-								<p>
-								There seem to be great resources for sending MIDI signals from Arduino. However, some have not been recently updated and many are not compatible with the Arduino UNO. This led to a couple of frustrating moments where I designed a circuit, adapted code, but the package (MIDIUSB) was not compatible with the microcontroller unit. 
-								</p>
-						
-								<p>In terms of resources I've been looking at, a few have been especially helpful. <a href="https://www.youtube.com/watch?v=IwfycC8rLos">This guide</a> by Nerd Musician gave a broad-scale overview of the process, and what tools/software are needed. I'll be using MIDI Monitor to check that my Arduino is actually sending MIDI signals, and a DAW (Digital Audio Workstation) such as Logic or Ableton to turn those signals into musical sounds. For the actual code, I believe MIDI Library works best with Arduino UNO, but is slightly outdated. I might just write my own MIDI convertor depending on how well this pre-existing package works. MIDI2 and MIDIUSB are other packages that are designed for other Arduino boards.</p>
-						
-								<h3 id="Update">Update:</h3><p>
-								<p>While I wasn't able to implement many of these ideas during the week I was first exploring them, these became especially important as I later worked on my MVP and final project. Sort of a dud week in terms of fabrication, but gave me the time to do research that launched my later ideas!</p>
+								<h3 id="Key">A Ring and a Smol Cup...and More</h3>
+								<p></p>
+
+								<span class="inset">
+						  			<img src="images/ring.png" alt="ring" width="600"><br>
+						  			<p>Design for box and cover in Fusion 360.</p>
+						  		</span>
+
+						  		<span class="inset">
+						  			<img src="images/cup.png" alt="cup" width="600"><br>
+						  			<p>Design for box and cover in Fusion 360.</p>
+						  		</span>
+								
+								<h3 id="Scan">3D Scanning</h3>
+								<p></p>
+
+								<h3 id="Project">3D Printing: a Key</h3>
+								<p></p>
+
+						  		<span class="inset">
+						  			<img src="images/key1.png" alt="key1" width="33%">
+						  			<img src="images/key2.png" alt="key2" width="33%">
+						  			<img src="images/key3.png" alt="key3" width="33%"><br>
+						  			<p>Design for box and cover in Fusion 360.</p>
+						  		</span>
+						  		<span class="inset">
+						  			<img src="images/mold1.png" alt="mold1" width="33%">
+						  			<img src="images/mold2.png" alt="mold2" width="33%">
+						  			<img src="images/mold3.png" alt="mold3" width="33%"><br>
+						  			<p>Design for box and cover in Fusion 360.</p>
+						  		</span>
 						  </div>
 
 						</div>
 					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<section>
-							</section>
-							<section>
-								<h2>Contact</h2>
-								<ul class="icons">
-									<li><a href="mailto:cvanamburg@college.harvard.edu" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
-								</ul>
-							</section>
-							<ul class="copyright">
-								<li>&copy; Chase Van Amburg 2022. All rights reserved</li><li> Sick Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</footer>
-
 			</div>
 
 		<!-- Scripts -->
-			<script src="../week1/assets/js/jquery.min.js"></script>
-			<script src="../week1/assets/js/browser.min.js"></script>
-			<script src="../week1/assets/js/breakpoints.min.js"></script>
-			<script src="../week1/assets/js/util.js"></script>
-			<script src="../week1/assets/js/main.js"></script>
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
 
 	</body>
 </html>
