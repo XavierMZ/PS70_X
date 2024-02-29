@@ -50,9 +50,9 @@
 							<div class="writeup">
 								<h3 id="Outline">Outline:</h3><p>
 									<ol>
-										<li><a href="#Key">Keyboard Key and Mold</a></li>
+										<li><a href="#Key">Basic Prints</a></li>
 										<li><a href="#Scan">3D Scanning</a></li>
-										<li><a href="#Project">Final Projecy</a></li>
+										<li><a href="#Project">Prints for Final Project</a></li>
 									</ol>
 								</p>
 
@@ -62,37 +62,91 @@
 
 								<div><p></p></div>
 								
-								<h3 id="Key">A Ring and a Smol Cup...and More</h3>
-								<p></p>
+								<h3 id="Key">A Ring and a Smol Cup</h3>
+								<p>For my first basic prints, I decided to print a ring and a small cup. Both were extremely simple to design, and the prints were also quite fast. Pictures of the designs are below, as well as the print for the cup. The ring took around 2 minutes to print, while the cup took around 30 minutes.</p>
 
 								<span class="inset">
-						  			<img src="images/ring.png" alt="ring" width="600"><br>
-						  			<p>Design for box and cover in Fusion 360.</p>
+						  			<img src="images/ring.png" alt="ring" width="49%">
+						  			<img src="images/cup.png" alt="cup" width="49%"><br>
+						  			<p>Designs for a ring and a small cup.</p>
 						  		</span>
 
 						  		<span class="inset">
-						  			<img src="images/cup.png" alt="cup" width="600"><br>
-						  			<p>Design for box and cover in Fusion 360.</p>
+						  			<img src="images/cup2.png" alt="cup" width="49%">
+						  			<img src="images/cup3.png" alt="cup" width="49%"><br>
+						  			<p>Small cup.</p>
 						  		</span>
 								
 								<h3 id="Scan">3D Scanning</h3>
-								<p></p>
+								<p>For the 3D scan I decided to scan my girlfriend's head. It was hard, and we had to try it 3 times before we found a way that yielded a succesful result. The hardest part was the hair, which is long(ish) and curly and dark, and this was the hardest part for the scanner. It was also difficult to deal with the dimensions, since we couldn't keep the camera too close or it wouldn't see everything, but we also couldn't keep it too far away because it wouldn't capture everything in view.</p>
+
+								<span class="inset">
+						  			<img src="images/head1.png" alt="head" width="33%">
+						  			<img src="images/head2.png" alt="head" width="33%">
+						  			<img src="images/head3.png" alt="head" width="33%"><br>
+						  			<p>Scan of head in Prusa Slicer.</p>
+						  		</span>
+
+						  		<p>There were a lot of holes in the initial rendering, especially in the hair area, but we filled most of these and smoothed the face and it ended up looking fairly decent, though not perfect. One thing that frustrated me was the neck, because there was no simple way of just making it flatter and rounder, even though that was one part which I did not care about at all and should have been quite simple. I ended up simply moving the whole head downward in the Prusa Slicer in order to remove parts od the model that were strange, and thus create a kind of rounder and more natural base for the head.</p>
+
+						  		<p>Interestingly, while the whole print was going to take around 5 hours, almost half of this time was for the support alone. Clearly, though, the support seems necessary for a print like this one.</p>
+
+						  		<span class="inset">
+						  			<img src="images/head4.png" alt="head" width="50%"><br>
+						  			<p>Sliced head with support in Prusa Slicer.</p>
+						  		</span>
+
+						  		<p>I started the print late Wednesday, so I wasn't able to see the finished print, but here are some pictures of how the bottom layers looked (much of it being support).</p>
+
+						  		<span class="inset">
+						  			<img src="images/rhead1.png" alt="head" width="49%">
+						  			<img src="images/rhead2.png" alt="head" width="49%"><br>
+						  			<p>Bottom layers of head.</p>
+						  		</span>
 
 								<h3 id="Project">3D Printing: a Key</h3>
-								<p></p>
+								<p>For my more serious print, I decided to start working on the MVP for my final project. Since I want to build a small, flexible piano keyboard, I am thinking that my MVP could just be a collection of many individual keys each of which plays a different note. And this week, I decided to start designing what one of those individual keys could look like.</p>
 
 						  		<span class="inset">
 						  			<img src="images/key1.png" alt="key1" width="33%">
 						  			<img src="images/key2.png" alt="key2" width="33%">
 						  			<img src="images/key3.png" alt="key3" width="33%"><br>
-						  			<p>Design for box and cover in Fusion 360.</p>
+						  			<p>Design for a single piano keyboard key.</p>
 						  		</span>
+
+								<p>I decided to make two designs: one for a piano key, and another representing its inverse to serve as a potential mold. Since I they keyboard to be flexible, I want to make the keys with silicone. This is also convenient because it makes the mechanism for pressing keys quite straightforward: I don't need any mechanics, because the material itself would allow me to press and deform it while retaining its intrinsic shape. To make the key, I research what the usual dimensions of a piano key are at <a href="https://music.stackexchange.com/questions/53847/what-is-the-length-of-piano-keys-in-inches">this website</a>. I made some decisions about the interior based on my intuition for how I want the silicone version to work. This 3D printed key won't work at all because it will be solid, but I just wanted to see it printed to get a sense about whether my current design would look as I want it to.</p>
+
 						  		<span class="inset">
 						  			<img src="images/mold1.png" alt="mold1" width="33%">
 						  			<img src="images/mold2.png" alt="mold2" width="33%">
 						  			<img src="images/mold3.png" alt="mold3" width="33%"><br>
-						  			<p>Design for box and cover in Fusion 360.</p>
+						  			<p>Design for a mold for a piano key.</p>
 						  		</span>
+
+						  		<p>I designed the mold after the key, and I just tried to reverse engineer my design for the key in order to determine how to design the inverse. I got it eventually, but I got the feeling that there may be a simpler version to do this in Fusion that I am just not yet aware of.</p>
+
+						  		<span class="inset">
+						  			<img src="images/rkey1.png" alt="key1" width="49%">
+						  			<img src="images/rkey2.png" alt="key2" width="49%"><br>
+						  			<p>Print of piano key.</p>
+						  		</span>
+
+						  		<p>The prints took around 5 hours to finish. When I first returned to get them, I realized that there hadn't been enough filament for the print to continue and so the job had been stopped. Fortunately changing the filament was extremely easy and straightforward. It also ended up being better, because I was able to get a print with two colors, and I am much happier with this color design than I would have been if it had been monochromatic.</p>
+
+						  		<span class="inset">
+						  			<img src="images/rmold1.png" alt="mold1" width="49%">
+						  			<img src="images/moldkey2.png" alt="mold2" width="49%"><br>
+						  			<p>Print of key mold, and comparison with key.</p>
+						  		</span>
+
+						  		<p>I am extremely happy with how the prints ended up. I aligned the key and the mold and it looks like they are near perfect inversions of each other. Unfortunately the key did not fit so easily inside the mold, and I did not want to push it too much in order to protect the integrity of the mold. But I think this is to be expected because I made the sizes identical, and so left no tolerance.</p>
+
+						  		<span class="inset">
+						  			<img src="images/moldkey1.png" alt="mold2" width="50%"><br>
+						  			<p>The mold and the key are an almost perfect inverse of each other.</p>
+						  		</span>
+
+						  		<p>After doing the 3D print of my model, I think I want to play around with some of the dimensions I had used for my key, but those will be fairly straightforward. After that I hope to pour silicone in my model and see if I can get an actual key out of it.</p>
 						  </div>
 
 						</div>
