@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Week 6</title>
@@ -26,9 +21,15 @@
 
 							<!-- Logo -->
 								<a href="../../index.html" class="logo">
-									<span class="symbol"><img src="../../images/logo.svg" alt="" /></span><span class="title">Chase Van Amburg</span>
+									<span class="title">PS 70: Xavier Morales</span>
 								</a>
 
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
 						</div>
 					</header>
 
@@ -36,10 +37,9 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="../index.html">Home</a></li>
-							<li><a href="../week3/final.html">Final Project</a></li>
-							<li><a href="../about.html">About</a></li>
-							<li><a href="../elements.html">Elements</a></li>
+							<li><a href="../../index.html">Home</a></li>
+							<li><a href="../../final/final_home.html">Final Project</a></li>
+							<li><a href="../../about.html">About</a></li>
 						</ul>
 					</nav>
 
@@ -51,15 +51,13 @@
 								<h3 id="Outline">Outline:</h3><p>
 									<ol>
 										<li><a href="#Res">Resistive Sensor</a></li>
-										
 										<li><a href="#Cap">Capacitive Sensors</a></li>
-										<li><a href="#MIDI">Convert Arduino UNO to MIDI Device</a></li>
 									</ol>
 								</p>
 							
 								<p>This week, we worked with sensors to translate between physical quantities and electrical signals.</p>
 								
-								<h3 id="Res">Resistive Sensor:</h3>
+<!-- 								<h3 id="Res">Resistive Sensor:</h3>
 								<p>
 									One of my classmates, Andrei, had spent the previous week working with an ultrasonic sensor. The <a  href="https://create.arduino.cc/projecthub/abdularbi17/ultrasonic-sensor-hc-sr04-with-arduino-tutorial-327ff6">HC-SR04</a> sends out a pulse and then receives it to estimate the distance of an object from the sensor. I had an idea of using this to create a theremin-like instrument. With code, I segmented up distances within a meter range into different notes; by placing your hand in any one of these ranges, the note corresponding to the region will be played on a buzzer. See the schematic below.
 								</p>
@@ -261,37 +259,20 @@ long tx_rx(){         // Function to execute rx_tx algorithm and return a value
 						
 								<p>3. Upload Sketch: See Section 3 of <a href="http://morecatlab.akiba.coocan.jp/lab/index.php/aruino/midi-firmware-for-arduino-uno-moco/?lang=en">this page</a> for a good description. Connect ICSP pin 4 and pin 6 near the reset button, which will put the board in Arduino Serial mode. Connect the board to computer and upload the example sketch under File &gt; Examples &gt; 04.Communication &gt; MIDI, or whatever MIDI program you have designed.</p>
 						
-								<p>4. Run MIDI Device: Disconnect ICSP pins 4 and 6 to convert the Arduino to a MIDI device. Connect it to your computer and it should run as a MIDI device. You can incorporate this directly into a DAW, or just check that your MIDI signal is being sent to the computer with a software like <a href="https://hautetechnique.com/midi/midiview/">MidiView</a>.</p>
+								<p>4. Run MIDI Device: Disconnect ICSP pins 4 and 6 to convert the Arduino to a MIDI device. Connect it to your computer and it should run as a MIDI device. You can incorporate this directly into a DAW, or just check that your MIDI signal is being sent to the computer with a software like <a href="https://hautetechnique.com/midi/midiview/">MidiView</a>.</p> -->
 						  </div>
 
 						</div>
 					</div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<section>
-							</section>
-							<section>
-								<h2>Contact</h2>
-								<ul class="icons">
-									<li><a href="mailto:cvanamburg@college.harvard.edu" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
-								</ul>
-							</section>
-							<ul class="copyright">
-								<li>&copy; Chase Van Amburg 2022. All rights reserved</li><li> Sick Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</footer>
-
 			</div>
 
 		<!-- Scripts -->
-			<script src="../week1/assets/js/jquery.min.js"></script>
-			<script src="../week1/assets/js/browser.min.js"></script>
-			<script src="../week1/assets/js/breakpoints.min.js"></script>
-			<script src="../week1/assets/js/util.js"></script>
-			<script src="../week1/assets/js/main.js"></script>
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
 
 	</body>
 </html>
