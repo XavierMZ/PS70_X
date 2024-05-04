@@ -20,45 +20,225 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 				
-
 				<!-- Header -->
-					<header id="header">
-						<div class="inner">
+				<header id="header">
+					<div class="inner">
+						<!-- Logo -->
+						<a href="../index.html" class="logo">
+							<span class="title">PS 70: Xavier Morales</span>
+						</a>
 
-							<!-- Logo -->
-								<a href="../index.html" class="logo">
-									<span class="title">PS 70: Xavier Morales</span>
-								</a>
-
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
-						</div>
-					</header>
+						<!-- Nav -->
+						<nav>
+							<ul>
+								<li><a href="#menu">Menu</a></li>
+							</ul>
+						</nav>
+					</div>
+				</header>
 
 				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="../index.html">Home</a></li>
-							<li><a href="final_home.html">Final Project</a></li>
-							<li><a href="../about.html">About</a></li>
-						</ul>
-					</nav>
+				<nav id="menu">
+					<h2>Menu</h2>
+					<ul>
+						<li><a href="../index.html">Home</a></li>
+						<li><a href="final_home.html">Final Project</a></li>
+						<li><a href="../about.html">About</a></li>
+					</ul>
+				</nav>
+
 
 				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-							<h1 align="center">Final Project Progress</h1>
-							<div class="writeup">
-								
-						  </div>
+				<div id="main">
+					<div class="inner">
+						<h1 align="center">Final Project Progress</h1>
+						<div class="writeup">
+							<p>There are two general parts of my project: the electronics, and the hardware. The electronics part is what actually produces sound. The hardware part is the cover which allows it to be functional in a nice way and make the whole thing seem like an actual piano. The first thing I wanted to do was figure out the electronics. And to do that I went in stages.</p>
 
-						</div>
+							<h2 align="left">Stage 1: MVP Electronics</h2>
+
+							<p>The most basic step was to be able to play a note with a simple button. So that's what I did. It was pretty simple. I just set up a simple button circuit where a button press results in the speaker getting played. Once I got this to work, I added a second button and duplicated some code to make sure it all worked even with multiple keys. It did. Below is a video of the circuit with two buttons (for two different keys) and some playing of them:</p>
+
+							VIDEO
+
+							<p>Below is the code I used for this:</p>
+
+							<pre><code language="language-Arduino">
+								int CPin = 12;
+								int DPin = 11;
+								int outPin = 13;
+
+								void setup() {
+								  Serial.begin(9600);
+								  pinMode(CPin, INPUT);
+								  pinMode(DPin, INPUT);
+								  pinMode(outPin, OUTPUT);
+								}
+
+								int CbuttonState = 0;
+								int DbuttonState = 0;
+								void loop() {
+								  CbuttonState = digitalRead(CPin);
+								  DbuttonState = digitalRead(DPin);
+								  Serial.println(CbuttonState + DbuttonState);
+								  if(CbuttonState) {
+								    tone(outPin, 250);
+								  }
+								  else if(DbuttonState) {
+								    tone(outPin, 350);
+								  }
+								  else {
+								    noTone(outPin);
+								  }
+								}
+							</code></pre>
+
+							<p>This could easily be made bigger to create a basic keyboard that has as many keys as I want, and so I did that. Here is the video of how it works:</p>
+
+							VIDEO
+
+							<p>And here is the code, which I have made nicer by using lists and loops to not have to merely copy paste the same code:</p>
+
+							<pre><code language="language-Arduino">
+								int outPin = 13;
+								int num_pins = 12;
+								int pins[12] = { 12,11,10,9,8,7,6,5,4,3,2,A5 }; // ,1
+								const int freqs[12] = { 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494 }; // 
+
+								void setup() {
+								  Serial.begin(9600);
+								  pinMode(outPin, OUTPUT);
+								  for(int i = 0; i < num_pins; i++) {
+								    pinMode(pins[i], INPUT);
+								  }
+								}
+
+								int notePlayed = 0;
+								void loop() {
+								  for(int i = 0; i < num_pins; i++) {
+								    if(digitalRead(pins[i])) {
+								      Serial.println(i);
+								      notePlayed = 1;
+								      tone(outPin, freqs[i]);
+								      break;
+								    }
+								  }
+								  
+								  if(!notePlayed) {
+								    noTone(outPin);
+								  }
+								  notePlayed = 0;
+								}
+							</code></pre>
+
+							<p>There are a couple of problems with this solution so far. The most basic of the problems is that I cannot control volume, and I also cannot change the octave. To do that, I switched to the toneAC library, which allows me to control volume, and added some buttons to change the octave level. I also needed a new breadboard and a potentiometer for this. Here is a video of the result:</p>
+
+							VIDEO
+
+							<p>And here is the code:
+
+							<pre><code language="language-Arduino">
+								#include <toneAC.h>
+
+								// int outPin = 13;
+								int volumePin = A2;
+								int octDPin = A3;
+								int octUPin = A4;
+
+								int num_pins = 12;
+								int pins[12] = { 12,11,A0,A1,8,7,6,5,4,3,2,A5 }; // 
+								const int freqs[12] = { 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494 };
+
+								void setup() {
+								  Serial.begin(9600);
+								  // pinMode(outPin, OUTPUT);
+								  pinMode(octDPin, INPUT);
+								  pinMode(octUPin, INPUT);
+								  for(int i = 0; i < num_pins; i++) {
+								    pinMode(pins[i], INPUT);
+								  }
+								}
+
+								int notePlayed = 0;
+								int frequency;
+								int volume;
+								int octave = 0;
+								int octDButton = 0;
+								int octUButton = 0;
+								void loop() {
+								  // Check whether octave needs to be changed.
+								  if(digitalRead(octDPin)) {
+								    if(octDButton == 0 & octUButton == 0) {
+								      octDButton = 1;
+								      octave -= 1;
+								      octave = max(octave,-3);
+								      Serial.println(octave);
+								    }
+								  }
+								  else {
+								    octDButton = 0;
+								  }
+								  if(digitalRead(octUPin)) {
+								    if(octDButton == 0 & octUButton == 0) {
+								      octUButton = 1;
+								      octave += 1;
+								      octave = min(octave,3);
+								      Serial.println(octave);
+								    }
+								  }
+								  else {
+								    octUButton = 0;
+								  }
+
+								  // Determine volume.
+								  volume = map(analogRead(volumePin), 0,1023, 0,10);
+
+								  // Play notes.
+								  for(int i = 0; i < num_pins; i++) {
+								    if(digitalRead(pins[i])) {
+								      notePlayed = 1;
+								      // tone(outPin, freqs[i]);
+								      frequency = freqs[i] * pow(2,octave);
+								      toneAC(frequency, volume); // 
+								      Serial.println(frequency);
+								      break;
+								    }
+								  }
+								  
+								  // Stop sound when no notes are pressed.
+								  if(!notePlayed) {
+								    // noTone(outPin);
+								    noToneAC();
+								  }
+
+								  // Reset.
+								  notePlayed = 0;
+								}
+							</code></pre>
+
+							<p>There are, of course, still plenty of problems with this. Among them are the following issues. 1) It doesn't sound like a piano or a keyboard; the sound is very electronic. 2) The volume function doesn't work perfectly; lowering the volume makes the keys sound "clicky" and of a much lesser quality. 3) I cannot play more than one key at the same time; this means I cannot play chords or more complex melodies, which most music contains. Moreover, the keyboard always default to playing the lowest key among all the ones I may be pressing, not just the first one I pressed. 4) The sound/volume of a key is constant while it is pressed. In a real piano or keyboard, the sound would go down over time and eventually fade away completely. 5) I have one octave of keys; in most mini-pianos and for most uses you usually want 2 octaves/sets of keys.</p>
+
+							<p>Now, problem 5 is technically easy to fix: I would just need to add a bunch more buttons and cables. It would be annoying, but not difficult. I decided not to do that because 1) it would make the whole project difficult to move and change, and 2) I was running out of pins in the Arduino. This is another thing I decided I should add, some kind of additional electronic component that can centralize all the key pins in order to save up space directly on the Arduino, and to make it easier in the future to add a second set of keys. But I left it for later.</p>
+
+							<p>The other problems are much harder to solve, in that there is no straightforward way to solve them (at least that I was aware of when I wrote this). It is possible that an ESP32 might have a more powerful library that fixes some of the problems; that is something I am investigating. But at least using standard Arduino libraries, this appears to be pretty far into what is possible.</p>
+
+							<p>One thing that definitely can be solved, though, is problem 3: playing more than one key at a time. I found a project online that was able to program the Uno to do precisely this. Unfortunately, the code is pretty complex. I decided to implement it, but only after I went some part of the way towards building the keyboard's hardware.</p>
+
+							<h2 align="left">Stage 2: MVP Hardware</h2>
+
+							<p>So this takes us to the second stage of this project. Armed with code and electronics that would be satisfactory for an MVP (Minimum Viable Project), I forged ahead to try to design and build the hardware that would make this thing look like an actual keyboard/piano and allow me to interact with it in a way that made it easy to play the notes, including complete melodies.</p>
+
+							<p>I had originally wanted to make the whole keyboard using silicone, in order to make it flexible enough to fold and put into a backpack in any configuration. I learned along the way that this would not be possible. The main reason for this was time: I simply did not have enough time, when I started working on this part, to get it done. But another reason was that the ideal of making a fully flexible keyboard became more and more unatainable given the number of rigid components involved. Perhaps the Arduino could be replaced by a smaller ESP computer that could fit nicely in the corner of the keyboard, along with some small batteries. But then there would need to be a jumble of cables connecting all the buttons, resistors, the potentiometer, etc. to each other and to the computer. There are surely ways to get this to work; but my realization of what it would take led me to decide that it was not feasible.</p>
+
+							<p>And so I decided I would make something much more similar to what others have done before me in this same class. There will be some very basic enclosure in the bottom which contains the Arduino/computer and the breadboard, and then I would need to design the top to make it interactive. In contrast to how others have done it before in this class, I decided to take an approach inspired by another project I saw online, where the main components the user interacts with would be part of the top of the keyboard hardware, and they would be connected with cables (probably soldered) to the breadboard(s) below, which would in turn be connected to the computer. This makes the job a little easier, because then it's just a matter of making the top of the hardware in a way that looks nice and works well. The bottom part of the hardware can be as simple as a wooden box, and the interior can be as ugly as it currently was.</p>
+
+							<p>Here's a drawing of what I decided to build first:</p>
+
+							DRAWING
+
+					  	</div>
 					</div>
+				</div>
 
 			</div>
 
