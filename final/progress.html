@@ -59,162 +59,160 @@
 
 							<p>The most basic step was to be able to play a note with a simple button. So that's what I did. It was pretty simple. I just set up a simple button circuit where a button press results in the speaker getting played. Once I got this to work, I added a second button and duplicated some code to make sure it all worked even with multiple keys. It did. Below is a video of the circuit with two buttons (for two different keys) and some playing of them:</p>
 
-							VIDEO
+							<span class="inset"><video width="480" controls autoplay>
+								  <source src="videos/2keys.MOV">
+								Your browser does not support the video tag. Well...sorry...
+							</video><br></span>
 
 							<p>Below is the code I used for this:</p>
 
-							<pre><code language="language-Arduino">
-								int CPin = 12;
-								int DPin = 11;
-								int outPin = 13;
+<pre><code language="language-Arduino">int CPin = 12;
+int DPin = 11;
+int outPin = 13;
 
-								void setup() {
-								  Serial.begin(9600);
-								  pinMode(CPin, INPUT);
-								  pinMode(DPin, INPUT);
-								  pinMode(outPin, OUTPUT);
-								}
+void setup() {
+  Serial.begin(9600);
+  pinMode(CPin, INPUT);
+  pinMode(DPin, INPUT);
+  pinMode(outPin, OUTPUT);
+}
 
-								int CbuttonState = 0;
-								int DbuttonState = 0;
-								void loop() {
-								  CbuttonState = digitalRead(CPin);
-								  DbuttonState = digitalRead(DPin);
-								  Serial.println(CbuttonState + DbuttonState);
-								  if(CbuttonState) {
-								    tone(outPin, 250);
-								  }
-								  else if(DbuttonState) {
-								    tone(outPin, 350);
-								  }
-								  else {
-								    noTone(outPin);
-								  }
-								}
-							</code></pre>
+int CbuttonState = 0;
+int DbuttonState = 0;
+void loop() {
+  CbuttonState = digitalRead(CPin);
+  DbuttonState = digitalRead(DPin);
+  Serial.println(CbuttonState + DbuttonState);
+  if(CbuttonState) {
+    tone(outPin, 250);
+  }
+  else if(DbuttonState) {
+    tone(outPin, 350);
+  }
+  else {
+    noTone(outPin);
+  }
+}</code></pre>
 
 							<p>This could easily be made bigger to create a basic keyboard that has as many keys as I want, and so I did that. Here is the video of how it works:</p>
 
-							VIDEO
+							<span class="inset"><video width="480" controls autoplay>
+								  <source src="videos/12keys_basic.MOV">
+								Your browser does not support the video tag. Well...sorry...
+							</video><br></span>
 
 							<p>And here is the code, which I have made nicer by using lists and loops to not have to merely copy paste the same code:</p>
 
-							<pre><code language="language-Arduino">
-								int outPin = 13;
-								int num_pins = 12;
-								int pins[12] = { 12,11,10,9,8,7,6,5,4,3,2,A5 }; // ,1
-								const int freqs[12] = { 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494 }; // 
+<pre><code language="language-Arduino">int outPin = 13;
+int num_pins = 12;
+int pins[12] = { 12,11,10,9,8,7,6,5,4,3,2,A5 }; // ,1
+const int freqs[12] = { 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494 }; // 
 
-								void setup() {
-								  Serial.begin(9600);
-								  pinMode(outPin, OUTPUT);
-								  for(int i = 0; i < num_pins; i++) {
-								    pinMode(pins[i], INPUT);
-								  }
-								}
+void setup() {
+  Serial.begin(9600);
+  pinMode(outPin, OUTPUT);
+  for(int i = 0; i < num_pins; i++) {
+    pinMode(pins[i], INPUT);
+  }
+}
 
-								int notePlayed = 0;
-								void loop() {
-								  for(int i = 0; i < num_pins; i++) {
-								    if(digitalRead(pins[i])) {
-								      Serial.println(i);
-								      notePlayed = 1;
-								      tone(outPin, freqs[i]);
-								      break;
-								    }
-								  }
-								  
-								  if(!notePlayed) {
-								    noTone(outPin);
-								  }
-								  notePlayed = 0;
-								}
-							</code></pre>
+int notePlayed = 0;
+void loop() {
+  for(int i = 0; i < num_pins; i++) {
+    if(digitalRead(pins[i])) {
+      Serial.println(i);
+      notePlayed = 1;
+      tone(outPin, freqs[i]);
+      break;
+    }
+  }
+  
+  if(!notePlayed) {
+    noTone(outPin);
+  }
+  notePlayed = 0;
+}</code></pre>
 
 							<p>There are a couple of problems with this solution so far. The most basic of the problems is that I cannot control volume, and I also cannot change the octave. To do that, I switched to the toneAC library, which allows me to control volume, and added some buttons to change the octave level. I also needed a new breadboard and a potentiometer for this. Here is a video of the result:</p>
 
-							VIDEO
+							<span class="inset"><video width="480" controls autoplay>
+								  <source src="videos/12keys.MOV">
+								Your browser does not support the video tag. Well...sorry...
+							</video><br></span>
 
 							<p>And here is the code:
 
-							<pre><code language="language-Arduino">
-								#include <toneAC.h>
+<pre><code language="language-Arduino">#include <toneAC.h>
 
-								// int outPin = 13;
-								int volumePin = A2;
-								int octDPin = A3;
-								int octUPin = A4;
+int volumePin = A2;
+int octDPin = A3;
+int octUPin = A4;
 
-								int num_pins = 12;
-								int pins[12] = { 12,11,A0,A1,8,7,6,5,4,3,2,A5 }; // 
-								const int freqs[12] = { 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494 };
+int num_pins = 12;
+int pins[12] = { 12,11,A0,A1,8,7,6,5,4,3,2,A5 }; // 
+const int freqs[12] = { 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494 };
 
-								void setup() {
-								  Serial.begin(9600);
-								  // pinMode(outPin, OUTPUT);
-								  pinMode(octDPin, INPUT);
-								  pinMode(octUPin, INPUT);
-								  for(int i = 0; i < num_pins; i++) {
-								    pinMode(pins[i], INPUT);
-								  }
-								}
+void setup() {
+  pinMode(octDPin, INPUT);
+  pinMode(octUPin, INPUT);
+  for(int i = 0; i < num_pins; i++) {
+    pinMode(pins[i], INPUT);
+  }
+}
 
-								int notePlayed = 0;
-								int frequency;
-								int volume;
-								int octave = 0;
-								int octDButton = 0;
-								int octUButton = 0;
-								void loop() {
-								  // Check whether octave needs to be changed.
-								  if(digitalRead(octDPin)) {
-								    if(octDButton == 0 & octUButton == 0) {
-								      octDButton = 1;
-								      octave -= 1;
-								      octave = max(octave,-3);
-								      Serial.println(octave);
-								    }
-								  }
-								  else {
-								    octDButton = 0;
-								  }
-								  if(digitalRead(octUPin)) {
-								    if(octDButton == 0 & octUButton == 0) {
-								      octUButton = 1;
-								      octave += 1;
-								      octave = min(octave,3);
-								      Serial.println(octave);
-								    }
-								  }
-								  else {
-								    octUButton = 0;
-								  }
+int notePlayed = 0;
+int frequency;
+int volume;
+int octave = 0;
+int octDButton = 0;
+int octUButton = 0;
+void loop() {
+  // Check whether octave needs to be changed.
+  if(digitalRead(octDPin)) {
+    if(octDButton == 0 & octUButton == 0) {
+      octDButton = 1;
+      octave -= 1;
+      octave = max(octave,-3);
+      Serial.println(octave);
+    }
+  }
+  else {
+    octDButton = 0;
+  }
+  if(digitalRead(octUPin)) {
+    if(octDButton == 0 & octUButton == 0) {
+      octUButton = 1;
+      octave += 1;
+      octave = min(octave,3);
+      Serial.println(octave);
+    }
+  }
+  else {
+    octUButton = 0;
+  }
 
-								  // Determine volume.
-								  volume = map(analogRead(volumePin), 0,1023, 0,10);
+  // Determine volume.
+  volume = map(analogRead(volumePin), 0,1023, 0,10);
 
-								  // Play notes.
-								  for(int i = 0; i < num_pins; i++) {
-								    if(digitalRead(pins[i])) {
-								      notePlayed = 1;
-								      // tone(outPin, freqs[i]);
-								      frequency = freqs[i] * pow(2,octave);
-								      toneAC(frequency, volume); // 
-								      Serial.println(frequency);
-								      break;
-								    }
-								  }
-								  
-								  // Stop sound when no notes are pressed.
-								  if(!notePlayed) {
-								    // noTone(outPin);
-								    noToneAC();
-								  }
+  // Play notes.
+  for(int i = 0; i < num_pins; i++) {
+    if(digitalRead(pins[i])) {
+      notePlayed = 1;
+      frequency = freqs[i] * pow(2,octave);
+      toneAC(frequency, volume);
+      break;
+    }
+  }
+  
+  // Stop sound when no notes are pressed.
+  if(!notePlayed) {
+    // noTone(outPin);
+    noToneAC();
+  }
 
-								  // Reset.
-								  notePlayed = 0;
-								}
-							</code></pre>
+  // Reset.
+  notePlayed = 0;
+}</code></pre>
 
 							<p>There are, of course, still plenty of problems with this. Among them are the following issues. 1) It doesn't sound like a piano or a keyboard; the sound is very electronic. 2) The volume function doesn't work perfectly; lowering the volume makes the keys sound "clicky" and of a much lesser quality. 3) I cannot play more than one key at the same time; this means I cannot play chords or more complex melodies, which most music contains. Moreover, the keyboard always default to playing the lowest key among all the ones I may be pressing, not just the first one I pressed. 4) The sound/volume of a key is constant while it is pressed. In a real piano or keyboard, the sound would go down over time and eventually fade away completely. 5) I have one octave of keys; in most mini-pianos and for most uses you usually want 2 octaves/sets of keys.</p>
 
